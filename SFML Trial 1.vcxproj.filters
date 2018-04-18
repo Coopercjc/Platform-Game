@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="treasurebox.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="mushroom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="groundbrick.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="heart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="gameover.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="eWalkR.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="eStand.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="brick.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="man.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="man2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="static1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="static1-upgraded.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="walk2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="walk2-upgraded.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="kabutops.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="groundbrick2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

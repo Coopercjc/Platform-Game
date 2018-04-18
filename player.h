@@ -1,14 +1,15 @@
 #pragma once
-#include "ground.h"
 
+//Represents the ground tiles
 struct Ground
 {
-	int dimension = 42; 
+	int dimension = 42;
 	int x, y;
-	int width, height; 
+	int width, height;
 };
 
-struct Mario
+//Represents the player character
+struct Player
 {
 	int x, y;
 	int lastx, lasty;
@@ -16,7 +17,7 @@ struct Mario
 	float timer, delay = 0.25;
 	bool walk;
 
-	static constexpr int width = 50, height = 55;
+	static constexpr int width =50, height = 55;
 
 	bool jump;
 	bool end = false;
@@ -26,10 +27,12 @@ struct Mario
 	int health = 1;
 
 	void Physics(Ground &ground);
+	
 	void Block(int &osszx);
 	void Gravity();
 };
 
+//Represents the enemy entities
 struct Enemy
 {
 	int x, y;
@@ -43,8 +46,9 @@ struct Enemy
 	float gravity, velocity = 0.5;
 
 	void Physics(Ground &ground);
+	void Physics(int x, int y);
 	void Gravity();
 	void AI(int limit);
-	void Kill(Mario &mario);
+	//void AI(int limit, Player &player);
+	void Kill(Player &player);
 };
-

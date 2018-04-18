@@ -1,52 +1,62 @@
 #include "game.h"
 #include <SFML/Graphics.hpp>
+
 using namespace sf;
 
 //Helps animating camera
 Clock clock1;
 float timer1, delay1 = 0.01;
 Camera camera;
+
 //includes all in-game calculations
 Game game;
+int levelCounter = 1;
 
 int main()
 {
-
-	game.Setup();
+	//this section will call the levels depending on the global variable counter
+	if (levelCounter == 1) {
+		game.Level1();
+	}
+	if (levelCounter == 2) {
+		game.Level2();
+	}
 	HWND hWnd = GetConsoleWindow();
 	ShowWindow(hWnd, SW_HIDE);
 
 	//Window
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Super Mario");
+	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "JUMPMAN");
 	sf::View view(sf::FloatRect(0, 0, WIDTH, HEIGHT));
 	sf::RectangleShape background;
 	background.setSize(sf::Vector2f(200 * game.ground.dimension, HEIGHT));
 	background.setFillColor(sf::Color(100, 100, 250));
 
-
 	//Setting Up Textures
-	sf::Texture marioT1, marioT2, groundT, 
-		gameoverT, brickT, enemyT, mushroomT, coinsT, heartT;
-	marioT1.loadFromFile("images/sFront.png");
-	marioT2.loadFromFile("images/walk.png");
-	groundT.loadFromFile("images/groundbrick.png");
-	gameoverT.loadFromFile("images/gameover.png");
-	brickT.loadFromFile("images/brick.png");
-	enemyT.loadFromFile("images/eStand.png");
-	mushroomT.loadFromFile("images/mushroom.png");
-	heartT.loadFromFile("images/heart.png");
+	sf::Texture playerT1, playerT2, playerT3, playerT4, groundT,
+		gameoverT, brickT, enemyT, enemyT1, powerupT, coinsT, heartT;
+	playerT1.loadFromFile("static1.png");
+	playerT2.loadFromFile("walk2.png");
+	playerT3.loadFromFile("static1-upgraded.png");
+	playerT4.loadFromFile("walk2-upgraded.png");
+	groundT.loadFromFile("groundbrick2.png");
+	gameoverT.loadFromFile("gameover.png");
+	brickT.loadFromFile("brick.png");
+	enemyT.loadFromFile("kabutops.png");
+	enemyT1.loadFromFile("ghost.png");
+	powerupT.loadFromFile("mushroom.png");
+	heartT.loadFromFile("heart.png");
 
 	//Linking Sprites to textures
-	sf::Sprite marioS1(marioT1), marioS2(marioT2),
+	sf::Sprite playerS1(playerT1), playerS2(playerT2), playerS3(playerT3), playerS4(playerT4),
 		groundS(groundT), gameoverS(gameoverT),
-		brickS(brickT), enemyS(enemyT), 
-		mushroomS(mushroomT), heartS(heartT);
+		brickS(brickT), enemyS(enemyT), enemyS1(enemyT1),
+		powerupS(powerupT), heartS(heartT);
 
 	//launching program
 	while (window.isOpen())
 	{
-		game.mario.lastx = game.mario.x;
-		game.mario.lasty = game.mario.y;
+		game.player.lastx = game.player.x;
+		game.player.lasty = game.player.y;
 
 		//checking events
 		sf::Event event;
@@ -61,113 +71,190 @@ int main()
 		window.clear();
 		game.Loop();
 
-		// draw everything here...
+		//this section draws the background of the levels
 		window.draw(background);
-		if (game.mario.x < game.mario.lastx) {
-			marioS1.setTextureRect(sf::IntRect(game.mario.width,
-				0, -game.mario.width, game.mario.height));
-			marioS2.setTextureRect(sf::IntRect(game.mario.width,
-				0, -game.mario.width, game.mario.height));
-		}
-		else if (game.mario.x > game.mario.lastx) {
-			marioS1.setTextureRect(sf::IntRect(0, 0, game.mario.width, 
-				game.mario.height));
-			marioS2.setTextureRect(sf::IntRect(0, 0, game.mario.width,
-				game.mario.height));
-		}
-		if (game.mario.walk == true)
+		if (game.player.health > 0)
 		{
-			marioS2.setPosition(game.mario.x,
-				game.mario.y); window.draw(marioS2);
+			if (game.player.x < game.player.lastx) {
+				playerS3.setTextureRect(sf::IntRect(game.player.width, 0, -game.player.width, game.player.height));
+				playerS4.setTextureRect(sf::IntRect(game.player.width, 0, -game.player.width, game.player.height));
+			}
+
+			else if (game.player.x > game.player.lastx) {
+				playerS3.setTextureRect(sf::IntRect(0, 0, game.player.width, game.player.height));
+				playerS4.setTextureRect(sf::IntRect(0, 0, game.player.width, game.player.height));
+			}
 		}
+		//displays the level when the player has one life left
 		else {
-			marioS1.setPosition(game.mario.x,
-				game.mario.y); window.draw(marioS1);
+			if (game.player.x < game.player.lastx) {
+				playerS1.setTextureRect(sf::IntRect(game.player.width, 0, -game.player.width, game.player.height));
+				playerS2.setTextureRect(sf::IntRect(game.player.width, 0, -game.player.width, game.player.height));
+			}
+
+			else if (game.player.x > game.player.lastx) {
+				playerS1.setTextureRect(sf::IntRect(0, 0, game.player.width, game.player.height));
+				playerS2.setTextureRect(sf::IntRect(0, 0, game.player.width, game.player.height));
+			}
 		}
-		for (int y = game.ground.y; 
-			y<game.ground.y + game.ground.height; 
-			y += game.ground.dimension)
-			for (int x = game.ground.x;
-				x <game.ground.x + game.ground.width; 
-				x += game.ground.dimension)
+		//outputs the position of the player
+		if (game.player.health > 0)
+		{
+			if (game.player.walk == true)
 			{
-				groundS.setPosition(x, y);  window.draw(groundS);
+				playerS4.setPosition(game.player.x, game.player.y);
+				window.draw(playerS4);
 			}
+			else
+			{
+				playerS3.setPosition(game.player.x, game.player.y);
+				window.draw(playerS3);
+			}
+		}
+		//does the same thing if the player has one life left
+		else
+		{
+			if (game.player.walk == true)
+			{
+				playerS2.setPosition(game.player.x, game.player.y);
+				window.draw(playerS2);
+			}
+			else
+			{
+				playerS1.setPosition(game.player.x, game.player.y);
+				window.draw(playerS1);
+			}
+		}
+		//drawing the pieces of ground
+		for (int y = game.ground.y; y < game.ground.y + game.ground.height; y += game.ground.dimension) {
+			for (int x = game.ground.x; x < game.ground.x + game.ground.width; x += game.ground.dimension)
+			{
+				groundS.setPosition(x - 32, y - 35);  window.draw(groundS);
+			}
+		}
 
-		//drawing bricks
-		for (int y = game.brick.y;
-			y<game.brick.y + game.brick.height;
-			y += game.brick.dimension)
-			for (int x = game.brick.x; 
-				x < game.brick.x + game.brick.width;
-				x += game.brick.dimension)
+		for (int y = game.ground2.y; y < game.ground2.y + game.ground2.height; y += game.ground2.dimension) {
+			for (int x = game.ground2.x; x < game.ground2.x + game.ground2.width; x += game.ground2.dimension)
+			{
+				groundS.setPosition(x - 32, y - 35);  window.draw(groundS);
+			}
+		}
+
+		for (int y = game.ground3.y; y < game.ground3.y + game.ground3.height; y += game.ground3.dimension) {
+			for (int x = game.ground3.x; x < game.ground3.x + game.ground3.width; x += game.ground3.dimension)
+			{
+				groundS.setPosition(x - 32, y - 35);  window.draw(groundS);
+			}
+		}
+
+		//drawing every brick found in the level
+		for (int y = game.brick.y; y < game.brick.y + game.brick.height; y += game.brick.dimension) {
+			for (int x = game.brick.x; x < game.brick.x + game.brick.width; x += game.brick.dimension)
 			{
 				brickS.setPosition(x, y);  window.draw(brickS);
 			}
+		}
 
-		for (int y = game.brick2.y; 
-			y<game.brick2.y + game.brick2.height; 
-			y += game.brick2.dimension)
-			for (int x = game.brick2.x;
-				x < game.brick2.x + game.brick2.width;
-				x += game.brick2.dimension)
+		for (int y = game.brick2.y; y < game.brick2.y + game.brick2.height; y += game.brick2.dimension) {
+			for (int x = game.brick2.x; x < game.brick2.x + game.brick2.width; x += game.brick2.dimension)
 			{
 				brickS.setPosition(x, y);  window.draw(brickS);
 			}
+		}
 
-		for (int y = game.brick3.y; 
-			y<game.brick3.y + game.brick3.height;
-			y += game.brick3.dimension)
-			for (int x = game.brick3.x;
-				x < game.brick3.x + game.brick3.width;
-				x += game.brick3.dimension)
+		for (int y = game.brick3.y; y < game.brick3.y + game.brick3.height; y += game.brick3.dimension) {
+			for (int x = game.brick3.x; x < game.brick3.x + game.brick3.width; x += game.brick3.dimension)
 			{
 				brickS.setPosition(x, y);  window.draw(brickS);
 			}
+		}
 
-		for (int x = 0; x < game.mario.health * 21; x += 21)
+		for (int y = game.brick4.y; y < game.brick4.y + game.brick4.height; y += game.brick4.dimension) {
+			for (int x = game.brick4.x; x < game.brick4.x + game.brick4.width; x += game.brick4.dimension)
+			{
+				brickS.setPosition(x, y);  window.draw(brickS);
+			}
+		}
+
+		for (int y = game.brick5.y; y < game.brick5.y + game.brick5.height; y += game.brick5.dimension) {
+			for (int x = game.brick5.x; x < game.brick5.x + game.brick5.width; x += game.brick5.dimension)
+			{
+				brickS.setPosition(x, y);  window.draw(brickS);
+			}
+		}
+
+		for (int y = game.brick6.y; y < game.brick6.y + game.brick6.height; y += game.brick6.dimension) {
+			for (int x = game.brick6.x; x < game.brick6.x + game.brick6.width; x += game.brick6.dimension)
+			{
+				brickS.setPosition(x, y);  window.draw(brickS);
+			}
+		}
+
+		for (int x = 0; x < game.player.health * 21; x += 21)
+
 		{
 			heartS.setPosition(camera.osszx + x, 1);  window.draw(heartS);
 		}
-		enemyS.setPosition(game.enemy.x,
-			game.enemy.y);  window.draw(enemyS);
-		if (game.mushroom.dead == false)
-		{ mushroomS.setPosition(game.mushroom.x, game.mushroom.y); 
-		window.draw(mushroomS); 
-		}
 
-		if (game.mario.end == true && game.mario.health <= 0)
+		//outputs the enemies in the level
+		enemyS.setPosition(game.enemy.x-10, game.enemy.y-12);
+		window.draw(enemyS);
+
+		enemyS1.setPosition(game.enemy1.x - 55, game.enemy1.y - 30);
+		window.draw(enemyS1);
+
+		//outputs the powerups in the level
+		if (game.powerup.dead == false)
+		{
+			powerupS.setPosition(game.powerup.x, game.powerup.y);
+			window.draw(powerupS);
+		}
+		//shows a gameover screen when the player loses all lives
+		if (game.player.end == true && game.player.health <= 0)
 		{
 			window.clear();
 			gameoverS.setPosition(camera.osszx + 100, 0);
 			window.draw(gameoverS);
 		}
-		else if (game.mario.end == true)
+		//resets the level when the player dies
+		else if (game.player.end == true)
 		{
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
 			camera.osszx = 0;
-			game.mario.health--;
+			game.player.health--;
 
-			game.mario.end = false;
-
-			game.Setup(); 
+			game.player.end = false;
+			if (levelCounter == 1)
+				game.Level1();
+			if (levelCounter == 2)
+				game.Level2();
 		}
+		//this section will change the level when the player reaches a certain point in the level
+		if (game.player.x > 950 && levelCounter == 1) {
+			levelCounter++;
+			window.clear();
+			view.setCenter(WIDTH / 2, HEIGHT / 2);
+			camera.osszx = 0;
+			if (levelCounter == 2)
+				game.Level2();
+		}
+
 		// window.draw(...);
 		float time = clock1.getElapsedTime().asSeconds();
 		clock1.restart();
 		timer1 += time;
+
 		//Animating the camera
-		if (timer1> delay1) 
+		if (timer1> delay1)
 		{
-
-			camera.Shift(game.mario);
+			camera.Shift(game.player);
 			view.move(camera.x, 0);
-
 			timer1 = 0;
 		}
-		//Preventing mario from going out of range
-		game.mario.Block(camera.osszx); 
+		//Preventing player from going out of range
+		game.player.Block(camera.osszx);
 		window.setView(view);
+
 		//ending frame
 		window.display();
 	}
