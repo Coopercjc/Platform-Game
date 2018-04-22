@@ -30,16 +30,23 @@ struct Coin
 {
 	int x, y;
 	static constexpr int width = 42, height = 42;
-
+	
 	float gravity = 0.5;
 	float velocity = 0.4;
-
+	
 	void Physics(Ground &ground);
 	void Gravity();
 	void AI();
 	void ScoreInc(Player &player);
-
+	
 };
+
+struct Flag{
+	int x, y;
+	static constexpr int width = 1, height = 1;
+}
+;
+
 
 //Defines the camera system to view the player as they move
 class Camera
@@ -57,6 +64,9 @@ class Game
 public:
 	void Level1();
 	void Level2();
+	void Level3();
+	void Level4();
+	void Circle(int level);
 	void Loop();
 
 	Player player;
@@ -75,10 +85,13 @@ public:
 
 	Enemy enemy;
 	Enemy enemy1;
+	Enemy circleBoi;
 
 	PowerUp powerup;
-
+	
 	Coin coin;
+
+	Flag flag;
 
 private:
 
