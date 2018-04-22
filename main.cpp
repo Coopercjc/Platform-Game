@@ -1,5 +1,6 @@
 #include "game.h"
 #include <SFML/Graphics.hpp>
+#include <sstream>
 //include file operations
 #include <fstream>
 
@@ -64,7 +65,6 @@ int main()
 	text.setFont(font)
 	test.setString("Score:");
 	text.setCharacterSize(24);
-	text.setColor(sf::color::White);
 	//launching program
 	while (window.isOpen())
 	{
@@ -214,10 +214,14 @@ int main()
 			}
 		}
 		//positions clock on window and incriments it with time
+		sf::Text myText;
+		std::stringStream ss;
+		ss << alarm;
+		myText.setString(ss.str().c_str());
 		for(int x = 0; x < game.player.health *21; x +=21)
 		{
-			alarm.setposition(camera.osszx - x, 1); window.draw(alarm);
-			alarm = clock.getElapsedTime().asSeconds();
+			myText.setposition(camera.osszx - x, 1); window.draw(myText);
+			myText = clock.getElapsedTime().asSeconds();
 		}
 		for (int x = 0; x < game.player.health * 21; x += 21)
 
@@ -242,15 +246,19 @@ int main()
 		if (game.player.end == true && game.player.health <= 0)
 		{
 			window.clear();
+			sf::Text moreText;
+			std::stringstream sm;
+			sm << score;
+			moreText.setString(sm.str().c_str());
 			gameoverS.setPosition(camera.osszx + 100, 0);
 			//sets position for the word score to appear and the score to appear beneath it
 			text.setPosition(camera.osszx + 100, 20);
-			score.setPosition(camera.osszx + 100, 0);
+			moreText.setPosition(camera.osszx + 100, 0);
 			window.draw(text);
-			window.draw(score);
-			std::ifstream open;
+			window.draw(moreText);
+			std::ifstream opens;
 			//creates file for saving score or stores it if file has already been created
-			if(!open.open("sefnew.txt"))
+			if(!opens.open("sefnew.txt"))
 			{
 				std::ofstream file ("sefnw.txt");
 				file << score << std::endl;
@@ -262,7 +270,7 @@ int main()
 				write << score;
 				write.close();
 			}
-			sleep(600);
+			sf::sleep(sf::milliseconds(1000));
 			window.draw(gameoverS);
 		}
 		//resets the level when the player dies
