@@ -27,7 +27,7 @@ struct Player
 	int health = 1;
 
 	void Physics(Ground &ground);
-	
+
 	void Block(int &osszx);
 	void Gravity();
 };
