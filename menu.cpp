@@ -1,11 +1,12 @@
-#include "menu.h"
 #include <iostream>
 #include <string>
+#include <SFML/Graphics.hpp>
+#include "menu.h"
 
 
 
-Menu::Menu(float width, float height){
-	if (!font.loadFromFile("mariofont.ttf")){
+Menu::Menu(float width, float height) {
+	if (!font.loadFromFile("mariofont.ttf")) {
 		std::cout << "Font not loaded" << std::endl;
 	}
 

@@ -29,6 +29,7 @@ struct PowerUp
 struct Coin
 {
 	int x, y;
+	int dimension = 42;
 	static constexpr int width = 42, height = 42;
 	
 	float gravity = 0.5;
@@ -82,6 +83,19 @@ public:
 	Ground brick6;
 	Ground brick7;
 	Ground brick8;
+
+	SCoin coin1;
+	SCoin coin2;
+	SCoin coin3;
+	SCoin coin4;
+	SCoin coin5;
+	SCoin coin6;
+	SCoin coin7;
+	SCoin coin8;
+	SCoin coin9;
+	SCoin coin10;
+	SCoin coin11;
+	SCoin coin12;
 
 	Enemy enemy;
 	Enemy enemy1;

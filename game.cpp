@@ -126,6 +126,7 @@ void Game::Loop()
 		enemy1.Kill(player);
 		powerup.Heal(player);
 		enemy.Kill(player);
+		coin.ScoreInc(player);
 		//Ends the game
 		if (player.y >HEIGHT)
 		{
@@ -275,6 +276,67 @@ void Game::Level1()
 	powerup.x = 100;
 	powerup.y = 100;
 	powerup.dead = false;
+
+
+	coin1.x = 100;
+	coin1.y = 370;
+	coin1.width = 1 * coin1.dimension;
+	coin1.height = 1 * coin1.dimension;
+	
+	coin2.x = 152;
+	coin2.y = 370;
+	coin2.width = 1 * coin2.dimension;
+	coin2.height = 1 * coin2.dimension;
+	
+	coin3.x = 204;
+	coin3.y = 370;
+	coin3.width = 1 * coin3.dimension;
+	coin3.height = 1 * coin3.dimension;
+	
+	coin4.x = 256;
+	coin4.y = 370;
+	coin4.width = 1 * coin4.dimension;
+	coin4.height = 1 * coin4.dimension;
+	
+	coin5.x = 308;
+	coin5.y = 370;
+	coin5.width = 1 * coin5.dimension;
+	coin5.height = 1 * coin5.dimension;
+
+	coin6.x = 900;
+	coin6.y = 370;
+	coin6.width = 1 * coin6.dimension;
+	coin6.height = 1 * coin6.dimension;
+	
+	coin7.x = 952;
+	coin7.y = 370;
+	coin7.width = 1 * coin7.dimension;
+	coin7.height = 1 * coin7.dimension;
+	
+	coin8.x = 1004;
+	coin8.y = 370;
+	coin8.width = 1 * coin8.dimension;
+	coin8.height = 1 * coin8.dimension;
+	
+	coin9.x = 1056;
+	coin9.y = 370;
+	coin9.width = 1 * coin9.dimension;
+	coin9.height = 1 * coin9.dimension;
+	
+	coin10.x = 1108;
+	coin10.y = 370;
+	coin10.width = 1 * coin10.dimension;
+	coin10.height = 1 * coin10.dimension;
+	
+	coin11.x = 1160;
+	coin11.y = 370;
+	coin11.width = 1 * coin11.dimension;
+	coin11.height = 1 * coin11.dimension;
+	
+	coin12.x = 1212;
+	coin12.y = 370;
+	coin12.width = 1 * coin12.dimension;
+	coin12.height = 1 * coin12.dimension;
 
 	//everything beyond this, is the layout for the level
 	ground.x = 0;

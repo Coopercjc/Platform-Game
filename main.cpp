@@ -1,8 +1,10 @@
 #include "game.h"
+#include <iostream>
 #include <SFML/Graphics.hpp>
 //include file operations
 #include <sstream>
 #include <fstream>
+#include "menu.h"
 
 using namespace sf;
 
@@ -45,6 +47,17 @@ int main()
 	background.setSize(sf::Vector2f(200 * game.ground.dimension, HEIGHT));
 	background.setFillColor(sf::Color(100, 100, 250));
 
+	Menu menu(window.getSize().x, window.getSize().y);	//
+	bool menuScreen = true;								//
+	int option;											//This segment is new
+	sf::Text menuTitle;									//
+	sf::Font font4 = menu.getFont();						//
+														//
+	menuTitle.setFont(font4);							//	
+	menuTitle.setString("2D Platform Game");			//
+	menuTitle.setFillColor(sf::Color::Yellow);			//This segment is new
+	menuTitle.setPosition(335, 175);
+
 	//Setting Up Textures
 	sf::Texture playerT1, playerT2, playerT3, playerT4, groundT,
 		gameoverT, brickT, enemyT, enemyT1, circleBoiT, powerupT, coinsT, heartT, flagT;
@@ -61,18 +74,18 @@ int main()
 	powerupT.loadFromFile("berry.png");
 	heartT.loadFromFile("heart.png");
 	flagT.loadFromFile("flag.png");
-	//coinT
+	coinsT.loadFromFile("treasurebox.png");
 
 	//Linking Sprites to textures
 	sf::Sprite playerS1(playerT1), playerS2(playerT2), playerS3(playerT3), playerS4(playerT4),
 		groundS(groundT), gameoverS(gameoverT),
 		brickS(brickT), enemyS(enemyT), enemyS1(enemyT1), circleBoiS(circleBoiT),
-		powerupS(powerupT), heartS(heartT), flagS(flagT);
+		powerupS(powerupT), heartS(heartT), flagS(flagT), coinsS(coinsT);
 
 	//enables fonts for the word score printed out when the player dies
 	sf::Text text;
 	sf::Font font;
-	font.loadFromFile("ariel.ttf");
+	font.loadFromFile("mariofont.ttf");
 	
 
 	//launching program
@@ -83,12 +96,111 @@ int main()
 
 		//checking events
 		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			// "close requested" event: we close the window
-			if (event.type == sf::Event::Closed)
-				window.close();
+
+		//Starts window at main menu
+		
+					//This whole while loop is new
+			while (menuScreen) {
+			
+				option = menu.getSelectedOption();
+			switch (option) {
+				case 0:
+					playerS1.setPosition(400, 275);
+					break;
+					
+						case 1:
+							playerS1.setPosition(400, 425);
+							break;
+							
+			}
+			
+				while (window.pollEvent(event))
+				 {
+				switch (event.type) {
+					case sf::Event::KeyReleased:
+						switch (event.key.code)
+							 {
+							case sf::Keyboard::Up:
+								menu.moveUpMenu();
+								option = menu.getSelectedOption();
+								switch (option) {
+									case 0:
+										playerS1.setPosition(400, 275);
+										break;
+										
+											case 1:
+												playerS1.setPosition(400, 425);
+												break;
+												
+								}
+								break;
+								
+									case sf::Keyboard::Down:
+										menu.moveDownMenu();
+										option = menu.getSelectedOption();
+										switch (option) {
+											case 0:
+												playerS1.setPosition(400, 275);
+												break;
+												
+													case 1:
+														playerS1.setPosition(400, 425);
+														break;
+														
+										}
+										break;
+										
+											case sf::Keyboard::Return:
+												option = menu.getSelectedOption();
+												if (option == 0) {
+													menuScreen = false;
+													
+												}
+												else if (option == 1) {
+													window.close();
+													
+												}
+												}
+						break;
+						case sf::Event::Closed:
+							window.close();
+							break;
+							
+				}
+				}
+			
+							//clear window
+				window.clear();
+			window.draw(background);
+			window.draw(playerS1);
+			window.draw(menuTitle);
+			menu.draw(window);
+			
+				window.display();
+			
+				
 		}
+		
+			while (window.pollEvent(event))
+			{
+				// "close requested" event: we close the window
+				if (event.type == sf::Event::Closed)
+					window.close();
+				
+					
+								//This segment is new
+					switch (event.type) {
+					case sf::Event::KeyReleased:
+						switch (event.key.code) {
+							case sf::Keyboard::Escape:
+								menuScreen = true;
+								break;
+								
+						}
+						break;
+						
+			}
+	}
 
 		//clear window
 		window.clear();
@@ -249,6 +361,48 @@ int main()
 				window.draw(brickS);
 			}
 		}
+
+		for (int y = game.coin.y; y < game.coin.y + game.coin.height; y += game.coin.dimension) {
+			for (int x = game.coin.x; x < game.coin.x + game.coin.width; x += game.coin.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin1.y; y < game.coin1.y + game.coin1.height; y += game.coin1.dimension) {
+			for (int x = game.coin1.x; x < game.coin1.x + game.coin1.width; x += game.coin1.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin2.y; y < game.coin2.y + game.coin2.height; y += game.coin2.dimension) {
+			for (int x = game.coin2.x; x < game.coin2.x + game.coin2.width; x += game.coin2.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin3.y; y < game.coin3.y + game.coin3.height; y += game.coin3.dimension) {
+			for (int x = game.coin3.x; x < game.coin3.x + game.coin3.width; x += game.coin3.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin4.y; y < game.coin4.y + game.coin4.height; y += game.coin4.dimension) {
+			for (int x = game.coin4.x; x < game.coin4.x + game.coin4.width; x += game.coin4.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+
 		
 		if (levelCounter==1) {
 			flagS.setPosition(game.flag.x, game.flag.y);
@@ -318,23 +472,52 @@ int main()
 			gameoverS.setPosition(camera.osszx + 100, 0);
 			text.setPosition(camera.osszx + 100, 20);
 			moreText.setPosition(camera.osszx + 100, 0);
-			window.draw(text);
-			window.draw(moreText);
+			//window.draw(text);
+			//window.draw(moreText);
 			std::ifstream opens;
-			/*if (!(opens.open("sefnw.txt")))
-			{
-				std::ofstream file("sefnw.txt");
-				file << score << std::endl;
+			//All of the code within this if statement is new
+			bool gameover = true;
+			while (gameover) {
+
+				window.clear();
+				gameoverS.setPosition(camera.osszx + 100, 0);
+				window.draw(gameoverS);
+				window.draw(text);
+				window.draw(moreText);
+
+				while (window.pollEvent(event))
+				{
+					switch (event.type) {
+					case sf::Event::KeyReleased:
+						switch (event.key.code) {
+						case sf::Keyboard::Return:
+							menuScreen = true;
+							game.player.health = 1;
+							gameover = false;
+							break;
+
+						}
+						break;
+
+					}
+				}
+
+				window.display();
+				/*if (!(opens.open("sefnw.txt")))
+				{
+					std::ofstream file("sefnw.txt");
+					file << score << std::endl;
+				}
+				else
+				{
+					std::ofstream write;
+					write.open("sefnw.txt", std::ios_base::app);
+					write << score;
+					write.close();
+				}*/
+				//sf::sleep(sf::milliseconds(600));
+				window.draw(gameoverS);
 			}
-			else
-			{
-				std::ofstream write;
-				write.open("sefnw.txt", std::ios_base::app);
-				write << score;
-				write.close();
-			}*/
-			sf::sleep(sf::milliseconds(600));
-			window.draw(gameoverS);
 		}
 		//resets the level when the player dies
 		else if (game.player.end == true)
