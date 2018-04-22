@@ -63,7 +63,7 @@ int main()
 	sf::Font font;
 	font.loadFromFile("ariel.ttf");
 	text.setFont(font)
-	test.setString("Score:");
+	text.setString("Score:");
 	text.setCharacterSize(24);
 	//launching program
 	while (window.isOpen())
@@ -218,10 +218,12 @@ int main()
 		std::stringStream ss;
 		ss << alarm;
 		myText.setString(ss.str().c_str());
+		myText.setFont(font);
+		myText.setCharacterSize(12);
 		for(int x = 0; x < game.player.health *21; x +=21)
 		{
 			myText.setposition(camera.osszx - x, 1); window.draw(myText);
-			myText = clock.getElapsedTime().asSeconds();
+			myText = clock1.getElapsedTime().asSeconds();
 		}
 		for (int x = 0; x < game.player.health * 21; x += 21)
 
@@ -250,6 +252,8 @@ int main()
 			std::stringstream sm;
 			sm << score;
 			moreText.setString(sm.str().c_str());
+			moreText.setFont(font);
+			moreText.setCharacterSize(24);
 			gameoverS.setPosition(camera.osszx + 100, 0);
 			//sets position for the word score to appear and the score to appear beneath it
 			text.setPosition(camera.osszx + 100, 20);
@@ -260,7 +264,7 @@ int main()
 			//creates file for saving score or stores it if file has already been created
 			if(!opens.open("sefnew.txt"))
 			{
-				std::ofstream file ("sefnw.txt");
+				std::ofstream file("sefnw.txt");
 				file << score << std::endl;
 			}
 			else
