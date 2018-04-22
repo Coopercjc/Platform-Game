@@ -1,5 +1,6 @@
 #include "game.h"
 #include <SFML/Graphics.hpp>
+#include <fstream>
 
 using namespace sf;
 
@@ -11,6 +12,8 @@ Camera camera;
 //includes all in-game calculations
 Game game;
 int levelCounter = 1;
+int alarm =	0;
+int score = 0;
 
 int main()
 {
@@ -51,10 +54,17 @@ int main()
 		groundS(groundT), gameoverS(gameoverT),
 		brickS(brickT), enemyS(enemyT), enemyS1(enemyT1),
 		powerupS(powerupT), heartS(heartT);
-
+	sf::Text text;
+	sf::Font font;
+	font.loadFromFile("ariel.ttf");
+	text.setFont(font)
+	test.setString("Score:");
+	text.setCharacterSize(24);
+	text.setColor(sf::color::White);
 	//launching program
 	while (window.isOpen())
 	{
+
 		game.player.lastx = game.player.x;
 		game.player.lasty = game.player.y;
 
@@ -72,6 +82,8 @@ int main()
 		game.Loop();
 
 		//this section draws the background of the levels
+		score += game.player.scor;
+		score += game.player.coin;
 		window.draw(background);
 		if (game.player.health > 0)
 		{
@@ -189,7 +201,11 @@ int main()
 				brickS.setPosition(x, y);  window.draw(brickS);
 			}
 		}
-
+		for(int x = 0; x < game.player.health *21; x +=21)
+		{
+			alarm.setposition(camera.osszx + x, 1); window.draw(alarm);
+			alarm = clock.getElapsedTime().asSeconds();
+		}
 		for (int x = 0; x < game.player.health * 21; x += 21)
 
 		{
@@ -214,6 +230,24 @@ int main()
 		{
 			window.clear();
 			gameoverS.setPosition(camera.osszx + 100, 0);
+			text.setPosition(camera.osszx + 100, 20);
+			score.setPosition(camera.osszx + 100, 0);
+			window.draw(text);
+			window.draw(score);
+			std::ifstream open;
+			if(!open.open("sefnew.txt"))
+			{
+				std::ofstream file ("sefnw.txt");
+				file << score << std::endl;
+			}
+			else
+			{
+				std::ofstream write;
+				write.open("sefnw.txt", std::ios_base::app);
+				write << score;
+				write.close();
+			}
+			sleep(600);
 			window.draw(gameoverS);
 		}
 		//resets the level when the player dies
@@ -232,6 +266,11 @@ int main()
 		//this section will change the level when the player reaches a certain point in the level
 		if (game.player.x > 950 && levelCounter == 1) {
 			levelCounter++;
+			for(int x = 0; alarm != 0; x +=21)
+			{
+				++score;
+				--alarm;
+			}
 			window.clear();
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
 			camera.osszx = 0;

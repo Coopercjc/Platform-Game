@@ -67,7 +67,7 @@ void Game::Loop()
 		enemy.Gravity();
 		powerup.Gravity();
 		//Places the bricks in the environment and gives them collision
-		
+
 		enemy1.Physics(enemy1.x,enemy1.y);
 		player.Physics(brick);
 		player.Physics(brick2);
@@ -117,7 +117,7 @@ void Game::Loop()
 		if (player.y >HEIGHT)
 		{
 			player.end = true;
-#ifdef sound	
+#ifdef sound
 			themesong.stop();
 #endif
 		}
@@ -137,7 +137,8 @@ void Camera::Shift(Player &player)
 	{
 		x = 4;
 		osszx += x;
-	} else
+	}
+	else
 	{
 		x = 0;
 	}

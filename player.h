@@ -25,9 +25,10 @@ struct Player
 	float gravity, velocity = 0.5;
 
 	int health = 1;
-
+	int scor = 0;
+	int coin = 0;
 	void Physics(Ground &ground);
-	
+
 	void Block(int &osszx);
 	void Gravity();
 };
@@ -42,7 +43,6 @@ struct Enemy
 	bool maxi;
 
 	bool dead;
-
 	float gravity, velocity = 0.5;
 
 	void Physics(Ground &ground);

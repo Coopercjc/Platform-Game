@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <windows.h> 
+#include <windows.h>
 #include <time.h>
 #include "player.h"
 
@@ -32,7 +32,7 @@ class Camera
 public:
 	int x;
 	int osszx;
-
+	
 	void Shift(Player &player);
 };
 
