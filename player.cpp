@@ -1,12 +1,12 @@
 #include "player.h"
-
+#include <math.h>
 //Designs the gravity and the physics of the player.
 //Also designs the collision detection of the bricks.
 void Player::Physics(Ground &ground)
 {
 	int midway = (ground.height/ 2) + ground.y;
 	int midline = (ground.width / 2) + ground.x;
-	
+
 	//Checks if the player clips through the bottom of the block
 	int midway = (ground.dimension/ 2) + ground.y;
 
@@ -15,10 +15,10 @@ void Player::Physics(Ground &ground)
 		&& x + width > ground.x
 		&& x < ground.x + ground.width)
 	{
-		y = ground.y + ground.dimension;
+		y = ground.y + ground.dimension + 10;
 		jump = false;
 	}
-	
+
 	//Checks if the player clips through the top of the block
 	if (y >= ground.y - height
 		&& y < midway
@@ -81,7 +81,7 @@ void Enemy::Gravity()
 //Makes the enemy walk back and forth
 void Enemy::AI(int limit)
 {
-	
+
 	if (max <= limit && dead == false)
 	{
 		x++;
@@ -112,7 +112,7 @@ void Enemy::AI(int limit)
 }
 
 void Enemy::Orbit(int a, int b, int r) {
-	
+
 	x = a + (r*cos(orbit));
 	y = b + (r*sin(orbit));
 
@@ -150,9 +150,5 @@ void Enemy::Kill1(Player &player)
 	{
 		player.end = true;
 	}
-<<<<<<< HEAD
 }
 }
-=======
-}
->>>>>>> parent of 7244034... fix

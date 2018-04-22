@@ -18,4 +18,3 @@ private:
 	sf::Font font;
 	sf::Text options[3];
 };
-

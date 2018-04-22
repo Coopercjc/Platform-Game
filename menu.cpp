@@ -56,5 +56,3 @@ int Menu::getSelectedOption() {
 sf::Font Menu::getFont() {
 	return font;
 }
-
-
