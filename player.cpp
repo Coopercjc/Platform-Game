@@ -1,14 +1,18 @@
 #include "player.h"
-#include <math.h>
 
 //Designs the gravity and the physics of the player.
 //Also designs the collision detection of the bricks.
 void Player::Physics(Ground &ground)
 {
+<<<<<<< HEAD
 	int midway = (ground.height/ 2) + ground.y;
 	int midline = (ground.width / 2) + ground.x;
 
 	//Checks if the player clips through the bottom of the block
+=======
+	int midway = (ground.dimension/ 2) + ground.y;
+	
+>>>>>>> bb0c12a364c347d301b404d47a2c88f9219ca40b
 	if (y > midway
 		&& y < ground.dimension + ground.y
 		&& x + width > ground.x
@@ -18,7 +22,10 @@ void Player::Physics(Ground &ground)
 		jump = false;
 	}
 
+<<<<<<< HEAD
 	//Checks if the player clips through the top of the block
+=======
+>>>>>>> bb0c12a364c347d301b404d47a2c88f9219ca40b
 	if (y >= ground.y - height
 		&& y < midway
 		&& x + width > ground.x
@@ -26,26 +33,6 @@ void Player::Physics(Ground &ground)
 	{
 		gravity = 0;
 		y = ground.y - height;
-		jump = false;
-	}
-
-	//Checks if the player clips through the left of the block
-	if (y + height > ground.y
-		&& y + height< ground.height + ground.y
-		&& x < midline
-		&& x + width >= ground.x)
-	{
-		x = ground.x - width;
-		jump = false;
-	}
-
-	//Checks if the plater clips through the right of the block
-	if (y > ground.y - height
-		&& y < ground.dimension + ground.y
-		&& x < ground.x + ground.width
-		&& x + width >= midline)
-	{
-		x = ground.x + ground.width;
 		jump = false;
 	}
 }
@@ -98,13 +85,16 @@ void Enemy::Gravity()
 }
 
 //Makes the enemy walk back and forth
-void Enemy::AI(int limit, Player &player)
+void Enemy::AI(int limit)
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> bb0c12a364c347d301b404d47a2c88f9219ca40b
 	if (max <= limit && dead == false)
 	{
 		x++;
-		max++;;
+		max++;
 	}
 	else if (max2 <= limit && dead == false)
 	{
@@ -123,6 +113,7 @@ void Enemy::AI(int limit, Player &player)
 		maxi = false;
 	}
 
+<<<<<<< HEAD
 	if (player.end == true) {
 		x = xx;
 		y = yy;
@@ -137,6 +128,8 @@ void Enemy::Orbit(int a, int b, int r) {
 
 
 	orbit += 0.005;
+=======
+>>>>>>> bb0c12a364c347d301b404d47a2c88f9219ca40b
 }
 
 //Determines whether the enemy is killed or if the player is killed by the enemy.
@@ -149,7 +142,7 @@ void Enemy::Kill(Player &player)
 		y + height >= player.y && player.lasty < player.y)
 	{
 		dead = true;
-
+		player.jump = true;
 	}
 	else if (x <= player.x + player.width &&
 		x + width >= player.x &&
@@ -158,6 +151,7 @@ void Enemy::Kill(Player &player)
 	{
 		player.end = true;
 	}
+<<<<<<< HEAD
 }
 
 void Enemy::Kill1(Player &player)
@@ -170,3 +164,6 @@ void Enemy::Kill1(Player &player)
 		player.end = true;
 	}
 }
+=======
+}
+>>>>>>> bb0c12a364c347d301b404d47a2c88f9219ca40b
