@@ -223,7 +223,7 @@ int main()
 		for(int x = 0; x < game.player.health *21; x +=21)
 		{
 			myText.setposition(camera.osszx + x, 10); window.draw(myText);
-			myText = clock1.getElapsedTime().asSeconds();
+			alarm = clock1.getElapsedTime().asSeconds();
 		}
 		for (int x = 0; x < game.player.health * 21; x += 21)
 
