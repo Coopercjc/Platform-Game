@@ -66,7 +66,6 @@ void Game::Loop()
 		player.Gravity();
 		enemy.Gravity();
 		powerup.Gravity();
-		coin.Gravity();
 		//Places the bricks in the environment and gives them collision
 		
 		enemy1.Physics(enemy1.x,enemy1.y);
@@ -103,29 +102,17 @@ void Game::Loop()
 		powerup.Physics(ground);
 		powerup.Physics(ground2);
 		powerup.Physics(ground3);
-		coin.Physics(brick);
-		coin.Physics(brick2);
-		coin.Physics(brick3);
-		coin.Physics(brick4);
-		coin.Physics(brick5);
-		coin.Physics(brick6);
-		coin.Physics(brick7);
-		coin.Physics(brick8);
-		coin.Physics(ground);
-		coin.Physics(ground2);
-		coin.Physics(ground3);
 
 		//Gives the enemies and powerups their respective AI
-		enemy.AI(100, player);
-		enemy1.AI(300, player);
+		enemy.AI(300);
+		enemy1.AI(300);
 		powerup.AI();
-		coin.AI();
 
 
 		//Dictates whether the enemy or player has been healed or killed
+		enemy.Kill(player);
 		enemy1.Kill(player);
 		powerup.Heal(player);
-		enemy.Kill(player);
 		//Ends the game
 		if (player.y >HEIGHT)
 		{
@@ -195,54 +182,6 @@ void PowerUp::Heal(Player &player)
 	}
 }
 
-void Coin::Physics(Ground &ground)
-{
-	if (y >= ground.y - height
-		 && y < ground.y + ground.dimension
-		 && x + width > ground.x
-		 && x < ground.x + ground.width)
-	{
-		gravity = 0;
-		y = ground.y - height;
-	}
-}
-
-void Coin::Gravity()
- {
-	gravity += velocity;
-	y += gravity;
-}
-
-//Similar to powerups, coins will function and move on their own
-void Coin::AI()
-{
-	x += 2;
-}
-
-//Coins should function like powerups, but move at a slower speed
-void Coin::ScoreInc(Player &player)
-{
-	if (x <= player.x + player.width &&
-		x + width >= player.x &&
-		y <= player.y + player.height &&
-		y + height >= player.y)
-	{
-		//A coin will be added to the coin total, and the total score will increase
-			if (player.CoinTotal != 11)
-			{
-			player.score += 100;
-			player.CoinTotal++;
-			}
-		//If the CoinTotal reaches a certain amount (like 100 in standard games), coin total is reset, and lives increases
-			else
-			{
-			player.score += 100;
-			player.CoinTotal = 0;
-			player.health++;
-			}
-		}
-	}
-
 //Populates the environment with the player, enemies, bricks, and ground tiles
 //creation of level 1
 void Game::Level1()
@@ -251,67 +190,39 @@ void Game::Level1()
 	player.x = 200;
 	player.y = 500;
 
-	//Sets the goal flag
-	flag.x = 2365;
-	flag.y = 325;
-
-	//sets the location of the enemies
-	enemy.dead = false;
-	enemy.x = 565;
-	enemy.y = 340;
-	enemy.xx = 565;
-	enemy.yy = 340;
-
-	//enemy.dead = false;
-
-	coin.x = 300;
-	coin.y = 300;
-
-	enemy1.x = 1000;
-	enemy1.y = 220;
+	enemy.x = 600;
+	enemy.y = 100;
 	enemy.dead = false;
 
-	//sets the location of the powerup
+	enemy1.x = 300;
+	enemy1.y = 300;
+	enemy.dead = false;
+
 	powerup.x = 100;
 	powerup.y = 100;
 	powerup.dead = false;
 
-	//everything beyond this, is the layout for the level
 	ground.x = 0;
 	ground.y = HEIGHT - (2 * ground.dimension);
-	ground.width = 10 * ground.dimension;
+	ground.width = 100 * ground.dimension;
 	ground.height = 2 * ground.dimension;
 
-	brick4.x = 535;
-	brick4.y = 320;
-	brick4.width = 5 * brick.dimension;
-	brick4.height = 1 * brick.dimension;
-
-	ground2.x = 850;
-	ground2.y = HEIGHT - (2 * ground2.dimension);
-	ground2.width = 5 * ground2.dimension;
-	ground2.height = 2 * ground2.dimension;
-
-	brick.x = 1150;
+	brick.x = 100;
 	brick.y = 320;
-	brick.width = 3 * brick.dimension;
+	brick.width = 4 * brick.dimension;
 	brick.height = 1 * brick.dimension;
 
-	brick2.x = 1420;
+	brick2.x = 400;
 	brick2.y = 150;
 	brick2.width = 3 * brick.dimension;
 	brick2.height = 1 * brick.dimension;
 
 
-	brick3.x = 1720;
+	brick3.x = 900;
 	brick3.y = 320;
-	brick3.width = 3 * brick.dimension;
+	brick3.width = 8 * brick.dimension;
 	brick3.height = 1 * brick.dimension;
 
-	ground3.x = 1980;
-	ground3.y = HEIGHT - (2 * ground2.dimension);
-	ground3.width = 50 * ground2.dimension;
-	ground3.height = 2 * ground2.dimension;
 }
 
 //creation of level 2
@@ -320,218 +231,48 @@ void Game::Level2()
 	player.x = 50;
 	player.y = 500;
 
-	//Sets the goal flag
-	flag.x = 2465;
-	flag.y = 325;
-
-	enemy.dead = true;
-	enemy1.dead = true;
-
 	ground.x = 0;
 	ground.y = HEIGHT - (2 * ground.dimension);
 	ground.width = 5 * ground.dimension;
 	ground.height = 2 * ground.dimension;
 
-	brick.x = 300;
+	brick.x = 250;
 	brick.y = 320;
 	brick.width = 2 * brick.dimension;
 	brick.height = 1 * brick.dimension;
 
-	brick2.x = 530;
+	brick2.x = 450;
 	brick2.y = 150;
 	brick2.width = 2 * brick.dimension;
 	brick2.height = 1 * brick.dimension;
 
-	brick3.x = 780;
+	brick3.x = 700;
 	brick3.y = 320;
 	brick3.width = 2 * brick.dimension;
 	brick3.height = 1 * brick.dimension;
 
-	ground2.x = 930;
+	ground2.x = 850;
 	ground2.y = HEIGHT - (2 * ground2.dimension);
 	ground2.width = 5 * ground2.dimension;
 	ground2.height = 2 * ground2.dimension;
 
-	brick4.x = 1230;
+	brick4.x = 1225;
 	brick4.y = 320;
 	brick4.width = 1 * brick.dimension;
 	brick4.height = 1 * brick.dimension;
 
-	brick5.x = 1425;
+	brick5.x = 1420;
 	brick5.y = 320;
 	brick5.width = 1 * brick.dimension;
 	brick5.height = 1 * brick.dimension;
 
-	brick6.x = 1610;
+	brick6.x = 1620;
 	brick6.y = 320;
 	brick6.width = 1 * brick.dimension;
 	brick6.height = 1 * brick.dimension;
 
-	brick7.x = 1790;
-	brick7.y = 320;
-	brick7.width = 1 * brick.dimension;
-	brick7.height = 1 * brick.dimension;
-
-	ground3.x = 2000;
+	ground3.x = 1785;
 	ground3.y = HEIGHT - (2 * ground2.dimension);
-	ground3.width = 50 * ground2.dimension;
+	ground3.width = 10 * ground2.dimension;
 	ground3.height = 2 * ground2.dimension;
-}
-
-//creation of level 3
-void Game::Level3()
-{
-	player.x = 50;
-	player.y = 500;
-
-	//Sets the goal flag
-	flag.x = 2665;
-	flag.y = 325;
-
-	enemy.dead = true;
-	enemy1.dead = true;
-
-	ground.x = 0;
-	ground.y = HEIGHT - (2 * ground.dimension);
-	ground.width = 5 * ground.dimension;
-	ground.height = 2 * ground.dimension;
-
-	brick.x = 300;
-	brick.y = 400;
-	brick.width = 1 * brick.dimension;
-	brick.height = 1 * brick.dimension;
-
-	brick2.x = 450;
-	brick2.y = 250;
-	brick2.width = 1 * brick.dimension;
-	brick2.height = 1 * brick.dimension;
-
-	brick3.x = 650;
-	brick3.y = 100;
-	brick3.width = 1 * brick.dimension;
-	brick3.height = 1 * brick.dimension;
-
-	brick4.x = 900;
-	brick4.y = 400;
-	brick4.width = 1 * brick.dimension;
-	brick4.height = 1 * brick.dimension;
-
-	ground2.x = 1050;
-	ground2.y = HEIGHT - (2 * ground2.dimension);
-	ground2.width = 5 * ground2.dimension;
-	ground2.height = 2 * ground2.dimension;
-
-	brick5.x = 1400;
-	brick5.y = 320;
-	brick5.width = 1 * brick.dimension;
-	brick5.height = 1 * brick.dimension;
-
-	brick6.x = 1620;
-	brick6.y = 400;
-	brick6.width = 1 * brick.dimension;
-	brick6.height = 1 * brick.dimension;
-
-	brick7.x = 1850;
-	brick7.y = 320;
-	brick7.width = 1 * brick.dimension;
-	brick7.height = 1 * brick.dimension;
-
-	brick8.x = 2050;
-	brick8.y = 475;
-	brick8.width = 1 * brick.dimension;
-	brick8.height = 1 * brick.dimension;
-
-	ground3.x = 2275;
-	ground3.y = HEIGHT - (2 * ground2.dimension);
-	ground3.width = 50 * ground2.dimension;
-	ground3.height = 2 * ground2.dimension;
-}
-
-//creation of level 4
-void Game::Level4()
-{
-	player.x = 50;
-	player.y = 500;
-
-	//Sets the goal flag
-	flag.x = 2365;
-	flag.y = 325;
-
-	ground.x = 0;
-	ground.y = HEIGHT - (2 * ground.dimension);
-	ground.width = 10 * ground.dimension;
-	ground.height = 2 * ground.dimension;
-
-	brick.x = 600;
-	brick.y = 400;
-	brick.width = 10 * brick.dimension;
-	brick.height = 1 * brick.dimension;
-
-	brick2.x = 600;
-	brick2.y = 300;
-	brick2.width = 1 * brick.dimension;
-	brick2.height = 1 * brick.dimension;
-
-	brick3.x = 1750;
-	brick3.y = 150;
-	brick3.width = 5 * brick.dimension;
-	brick3.height = 1 * brick.dimension;
-
-	brick4.x = 1530;
-	brick4.y = 260;
-	brick4.width = 1 * brick.dimension;
-	brick4.height = 1 * brick.dimension;
-
-	ground2.x = 1100;
-	ground2.y = HEIGHT - (2 * ground2.dimension);
-	ground2.width = 5 * ground2.dimension;
-	ground2.height = 2 * ground2.dimension;
-
-	brick5.x = 1480;
-	brick5.y = 550;
-	brick5.width = 1 * brick.dimension;
-	brick5.height = 1 * brick.dimension;
-
-	brick6.x = 1620;
-	brick6.y = 400;
-	brick6.width = 1 * brick.dimension;
-	brick6.height = 1 * brick.dimension;
-
-	brick7.x = 2200;
-	brick7.y = 475;
-	brick7.width = 1 * brick.dimension;
-	brick7.height = 1 * brick.dimension;
-
-	brick8.x = 2450;
-	brick8.y = 475;
-	brick8.width = 1 * brick.dimension;
-	brick8.height = 1 * brick.dimension;
-
-	ground3.x = 2700;
-	ground3.y = HEIGHT - (2 * ground2.dimension);
-	ground3.width = 50 * ground2.dimension;
-	ground3.height = 2 * ground2.dimension;
-}
-
-void Game::Circle(int level) {
-	if (level == 1) {
-		circleBoi.Physics(circleBoi.x, circleBoi.y);
-		circleBoi.Kill1(player);
-		circleBoi.Orbit(5350, 5230, 50);
-	}
-	if (level == 2) {
-		circleBoi.Physics(circleBoi.x, circleBoi.y);
-		circleBoi.Kill1(player);
-		circleBoi.Orbit(5450, 5320, 50);
-	}
-	if (level == 3) {
-		circleBoi.Physics(circleBoi.x, circleBoi.y);
-		circleBoi.Kill1(player);
-		circleBoi.Orbit(5450, 5320, 50);
-	}
-	if (level == 4) {
-		circleBoi.Physics(circleBoi.x, circleBoi.y);
-		circleBoi.Kill1(player);
-		circleBoi.Orbit(5450, 5320, 50);
-	}
 }
