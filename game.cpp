@@ -66,8 +66,9 @@ void Game::Loop()
 		player.Gravity();
 		enemy.Gravity();
 		powerup.Gravity();
+		coin.Gravity();
 		//Places the bricks in the environment and gives them collision
-
+		
 		enemy1.Physics(enemy1.x,enemy1.y);
 		player.Physics(brick);
 		player.Physics(brick2);
@@ -102,22 +103,35 @@ void Game::Loop()
 		powerup.Physics(ground);
 		powerup.Physics(ground2);
 		powerup.Physics(ground3);
+		coin.Physics(brick);
+		coin.Physics(brick2);
+		coin.Physics(brick3);
+		coin.Physics(brick4);
+		coin.Physics(brick5);
+		coin.Physics(brick6);
+		coin.Physics(brick7);
+		coin.Physics(brick8);
+		coin.Physics(ground);
+		coin.Physics(ground2);
+		coin.Physics(ground3);
+
 
 		//Gives the enemies and powerups their respective AI
 		enemy.AI(300);
 		enemy1.AI(300);
 		powerup.AI();
-
+		coin.AI();
 
 		//Dictates whether the enemy or player has been healed or killed
 		enemy.Kill(player);
 		enemy1.Kill(player);
 		powerup.Heal(player);
+		coin.ScoreInc(player);
 		//Ends the game
 		if (player.y >HEIGHT)
 		{
 			player.end = true;
-#ifdef sound
+#ifdef sound	
 			themesong.stop();
 #endif
 		}
@@ -137,8 +151,7 @@ void Camera::Shift(Player &player)
 	{
 		x = 4;
 		osszx += x;
-	}
-	else
+	} else
 	{
 		x = 0;
 	}
@@ -180,6 +193,56 @@ void PowerUp::Heal(Player &player)
 	{
 		dead = true;
 		player.health++;
+	}
+}
+
+
+void Coin::Physics(Ground &ground)
+{
+	if (y >= ground.y - height
+		&& y < ground.y + ground.dimension
+		&& x + width > ground.x
+		&& x < ground.x + ground.width)
+	{
+		gravity = 0;
+		y = ground.y - height;
+	}
+}
+
+void Coin::Gravity()
+{
+	gravity += velocity;
+	y += gravity;
+}
+
+//Similar to powerups, coins will function and move on their own
+void Coin::AI()
+{
+	x += 2;
+}
+
+//Coins should function like powerups, but move at a slower speed
+void Coin::ScoreInc(Player &player)
+{
+	if (x <= player.x + player.width &&
+		x + width >= player.x &&
+		y <= player.y + player.height &&
+		y + height >= player.y)
+	{
+//A coin will be added to the coin total, and the total score will increase
+		if(player.CoinTotal != 11)
+		{
+			player.score += 100;
+			player.CoinTotal++;
+
+		}
+//If the CoinTotal reaches a certain amount (like 100 in standard games), coin total is reset, and lives increases
+		else 
+			{
+			player.score += 100;
+			player.CoinTotal = 0;
+			player.health++;
+			}
 	}
 }
 

@@ -1,8 +1,5 @@
 #include "game.h"
 #include <SFML/Graphics.hpp>
-#include <sstream>
-//include file operations
-#include <fstream>
 
 using namespace sf;
 
@@ -15,10 +12,12 @@ Camera camera;
 Game game;
 int levelCounter = 1;
 //tracker for time elapsed and overall score
-int alarm =	0;
+int alarm = 0;
 int score = 0;
+
 int temp = 0;
 int dumb = 0;
+
 int main()
 {
 	//this section will call the levels depending on the global variable counter
@@ -58,17 +57,15 @@ int main()
 		groundS(groundT), gameoverS(gameoverT),
 		brickS(brickT), enemyS(enemyT), enemyS1(enemyT1),
 		powerupS(powerupT), heartS(heartT);
-		//enables fonts for the word score printed out when player dies
+
+	//enables fonts for the word score printed out when player dies
 	sf::Text text;
 	sf::Font font;
 	font.loadFromFile("ariel.ttf");
-	text.setFont(font)
-	text.setString("Score:");
-	text.setCharacterSize(24);
+
 	//launching program
 	while (window.isOpen())
 	{
-
 		game.player.lastx = game.player.x;
 		game.player.lasty = game.player.y;
 
@@ -84,17 +81,20 @@ int main()
 		//clear window
 		window.clear();
 		game.Loop();
+
 		//ups score if an enemy is killed or a coin is aquired
-		if(game.player.scor != 0 && temp != game.player.score)
-		{
-				++score;
-				temp = game.player.scor;
-		}
-		if(game.player.coin != 0 && dumb != game.player.coin)
-		{
-				++score;
-				dumb = game.player.coin;
-		}
+		if (game.player.score != 0 && temp != game.player.score)
+			{
+			++score;
+			temp = game.player.score;
+			}
+		if (game.player.CoinTotal != 0 && dumb != game.player.CoinTotal)
+		    {
+			++score;
+			dumb = game.player.CoinTotal;
+			}
+
+
 		//this section draws the background of the levels
 		window.draw(background);
 		if (game.player.health > 0)
@@ -213,22 +213,11 @@ int main()
 				brickS.setPosition(x, y);  window.draw(brickS);
 			}
 		}
-		//positions clock on window and incriments it with time
-		sf::Text myText;
-		std::stringStream ss;
-		ss << alarm;
-		myText.setString(ss.str().c_str());
-		myText.setFont(font);
-		myText.setCharacterSize(12);
-		for(int x = 0; x < game.player.health *21; x +=21)
-		{
-			myText.setposition(camera.osszx + x, 10); window.draw(myText);
-			alarm = clock1.getElapsedTime().asSeconds();
-		}
+
 		for (int x = 0; x < game.player.health * 21; x += 21)
 
 		{
-			heartS.setPosition(camera.osszx + x, 1);  window.draw(heartS);
+			heartS.setPosition(camera.osszx - x, 1);  window.draw(heartS);
 		}
 
 		//outputs the enemies in the level
@@ -248,33 +237,7 @@ int main()
 		if (game.player.end == true && game.player.health <= 0)
 		{
 			window.clear();
-			sf::Text moreText;
-			std::stringstream sm;
-			sm << score;
-			moreText.setString(sm.str().c_str());
-			moreText.setFont(font);
-			moreText.setCharacterSize(24);
 			gameoverS.setPosition(camera.osszx + 100, 0);
-			//sets position for the word score to appear and the score to appear beneath it
-			text.setPosition(camera.osszx + 100, 20);
-			moreText.setPosition(camera.osszx + 100, 0);
-			window.draw(text);
-			window.draw(moreText);
-			std::ifstream opens;
-			//creates file for saving score or stores it if file has already been created
-			if(!opens.open("sefnew.txt"))
-			{
-				std::ofstream file("sefnw.txt");
-				file << score << std::endl;
-			}
-			else
-			{
-				std::ofstream write;
-				write.open("sefnw.txt", std::ios_base::app);
-				write << score;
-				write.close();
-			}
-			sf::sleep(sf::milliseconds(1000));
 			window.draw(gameoverS);
 		}
 		//resets the level when the player dies
@@ -293,12 +256,6 @@ int main()
 		//this section will change the level when the player reaches a certain point in the level
 		if (game.player.x > 950 && levelCounter == 1) {
 			levelCounter++;
-			//when level ends the time elapsed gets substracted from score
-			for(int x = 0; alarm != 0; x +=21)
-			{
-				++score;
-				--alarm;
-			}
 			window.clear();
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
 			camera.osszx = 0;

@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <windows.h>
+#include <windows.h> 
 #include <time.h>
 #include "player.h"
 
@@ -26,13 +26,28 @@ struct PowerUp
 	void Heal(Player &player);
 };
 
+struct Coin
+{
+	int x, y;
+	static constexpr int width = 42, height = 42;
+
+	float gravity = 0.5;
+	float velocity = 0.4;
+
+	void Physics(Ground &ground);
+	void Gravity();
+	void AI();
+	void ScoreInc(Player &player);
+
+};
+
 //Defines the camera system to view the player as they move
 class Camera
 {
 public:
 	int x;
 	int osszx;
-	
+
 	void Shift(Player &player);
 };
 
@@ -62,6 +77,8 @@ public:
 	Enemy enemy1;
 
 	PowerUp powerup;
+
+	Coin coin;
 
 private:
 

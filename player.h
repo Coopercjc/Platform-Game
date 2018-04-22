@@ -25,13 +25,14 @@ struct Player
 	float gravity, velocity = 0.5;
 
 	int health = 1;
-	//tracks score for enemies killed and coins collected
-	int scor = 0;
-	int coin = 0;
-	void Physics(Ground &ground);
 
+	void Physics(Ground &ground);
+	
 	void Block(int &osszx);
 	void Gravity();
+
+	int score = 0;
+	int CoinTotal = 0;
 };
 
 //Represents the enemy entities
@@ -44,6 +45,7 @@ struct Enemy
 	bool maxi;
 
 	bool dead;
+
 	float gravity, velocity = 0.5;
 
 	void Physics(Ground &ground);

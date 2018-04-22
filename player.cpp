@@ -5,7 +5,7 @@
 void Player::Physics(Ground &ground)
 {
 	int midway = (ground.dimension/ 2) + ground.y;
-
+	
 	if (y > midway
 		&& y < ground.dimension + ground.y
 		&& x + width > ground.x
@@ -61,8 +61,6 @@ void Enemy::Physics(int a, int b) {
 	y = b;
 
 	if (dead) {
-		//when an enemy is killed the player scor goes up by one
-		++scor;
 		gravity += velocity;
 		y += gravity;
 	}
