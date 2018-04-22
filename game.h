@@ -26,6 +26,21 @@ struct PowerUp
 	void Heal(Player &player);
 };
 
+struct Coin
+{
+	int x, y;
+	static constexpr int width = 42, height = 42;
+
+	float gravity = 0.5;
+	float velocity = 0.4;
+
+	void Physics(Ground &ground);
+	void Gravity();
+	void AI();
+	void ScoreInc(Player &player);
+
+};
+
 //Defines the camera system to view the player as they move
 class Camera
 {
@@ -58,10 +73,25 @@ public:
 	Ground brick7;
 	Ground brick8;
 
+	SCoin coin1;
+	SCoin coin2;
+	SCoin coin3;
+	SCoin coin4;
+	SCoin coin5;
+	SCoin coin6;
+	SCoin coin7;
+	SCoin coin8;
+	SCoin coin9;
+	SCoin coin10;
+	SCoin coin11;
+	SCoin coin12;
+
 	Enemy enemy;
 	Enemy enemy1;
 
 	PowerUp powerup;
+
+	Coin coin;
 
 private:
 

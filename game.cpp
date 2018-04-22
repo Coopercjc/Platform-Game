@@ -66,6 +66,7 @@ void Game::Loop()
 		player.Gravity();
 		enemy.Gravity();
 		powerup.Gravity();
+		coin.Gravity();
 		//Places the bricks in the environment and gives them collision
 		
 		enemy1.Physics(enemy1.x,enemy1.y);
@@ -102,17 +103,30 @@ void Game::Loop()
 		powerup.Physics(ground);
 		powerup.Physics(ground2);
 		powerup.Physics(ground3);
+		coin.Physics(brick);
+		coin.Physics(brick2);
+		coin.Physics(brick3);
+		coin.Physics(brick4);
+		coin.Physics(brick5);
+		coin.Physics(brick6);
+		coin.Physics(brick7);
+		coin.Physics(brick8);
+		coin.Physics(ground);
+		coin.Physics(ground2);
+		coin.Physics(ground3);
+
 
 		//Gives the enemies and powerups their respective AI
 		enemy.AI(300);
 		enemy1.AI(300);
 		powerup.AI();
-
+		coin.AI();
 
 		//Dictates whether the enemy or player has been healed or killed
 		enemy.Kill(player);
 		enemy1.Kill(player);
 		powerup.Heal(player);
+		coin.ScoreInc(player);
 		//Ends the game
 		if (player.y >HEIGHT)
 		{
@@ -182,6 +196,56 @@ void PowerUp::Heal(Player &player)
 	}
 }
 
+
+void Coin::Physics(Ground &ground)
+{
+	if (y >= ground.y - height
+		&& y < ground.y + ground.dimension
+		&& x + width > ground.x
+		&& x < ground.x + ground.width)
+	{
+		gravity = 0;
+		y = ground.y - height;
+	}
+}
+
+void Coin::Gravity()
+{
+	gravity += velocity;
+	y += gravity;
+}
+
+//Similar to powerups, coins will function and move on their own
+void Coin::AI()
+{
+	x += 2;
+}
+
+//Coins should function like powerups, but move at a slower speed
+void Coin::ScoreInc(Player &player)
+{
+	if (x <= player.x + player.width &&
+		x + width >= player.x &&
+		y <= player.y + player.height &&
+		y + height >= player.y)
+	{
+//A coin will be added to the coin total, and the total score will increase
+		if(player.CoinTotal != 11)
+		{
+			player.score += 100;
+			player.CoinTotal++;
+
+		}
+//If the CoinTotal reaches a certain amount (like 100 in standard games), coin total is reset, and lives increases
+		else 
+			{
+			player.score += 100;
+			player.CoinTotal = 0;
+			player.health++;
+			}
+	}
+}
+
 //Populates the environment with the player, enemies, bricks, and ground tiles
 //creation of level 1
 void Game::Level1()
@@ -212,6 +276,32 @@ void Game::Level1()
 	brick.width = 4 * brick.dimension;
 	brick.height = 1 * brick.dimension;
 
+	coin1.x = 100;
+	coin1.y = 370;
+	coin1.width = 1 * coin1.dimension;
+	coin1.height = 1 * coin1.dimension;
+
+	coin2.x = 152;
+	coin2.y = 370;
+	coin2.width = 1 * coin2.dimension;
+	coin2.height = 1 * coin2.dimension;
+
+	coin3.x = 204;
+	coin3.y = 370;
+	coin3.width = 1 * coin3.dimension;
+	coin3.height = 1 * coin3.dimension;
+
+	coin4.x = 256;
+	coin4.y = 370;
+	coin4.width = 1 * coin4.dimension;
+	coin4.height = 1 * coin4.dimension;
+
+	coin5.x = 308;
+	coin5.y = 370;
+	coin5.width = 1 * coin5.dimension;
+	coin5.height = 1 * coin5.dimension;
+
+
 	brick2.x = 400;
 	brick2.y = 150;
 	brick2.width = 3 * brick.dimension;
@@ -223,6 +313,40 @@ void Game::Level1()
 	brick3.width = 8 * brick.dimension;
 	brick3.height = 1 * brick.dimension;
 
+	coin6.x = 900;
+	coin6.y = 370;
+	coin6.width = 1 * coin6.dimension;
+	coin6.height = 1 * coin6.dimension;
+
+	coin7.x = 952;
+	coin7.y = 370;
+	coin7.width = 1 * coin7.dimension;
+	coin7.height = 1 * coin7.dimension;
+
+	coin8.x = 1004;
+	coin8.y = 370;
+	coin8.width = 1 * coin8.dimension;
+	coin8.height = 1 * coin8.dimension;
+
+	coin9.x = 1056;
+	coin9.y = 370;
+	coin9.width = 1 * coin9.dimension;
+	coin9.height = 1 * coin9.dimension;
+
+	coin10.x = 1108;
+	coin10.y = 370;
+	coin10.width = 1 * coin10.dimension;
+	coin10.height = 1 * coin10.dimension;
+
+	coin11.x = 1160;
+	coin11.y = 370;
+	coin11.width = 1 * coin11.dimension;
+	coin11.height = 1 * coin11.dimension;
+
+	coin12.x = 1212;
+	coin12.y = 370;
+	coin12.width = 1 * coin12.dimension;
+	coin12.height = 1 * coin12.dimension;
 }
 
 //creation of level 2
@@ -256,6 +380,26 @@ void Game::Level2()
 	ground2.width = 5 * ground2.dimension;
 	ground2.height = 2 * ground2.dimension;
 
+	coin1.x = 850;
+	coin1.y = HEIGHT - (2 * coin1.dimension) + 52;
+	coin1.width = 1 * coin1.dimension;
+	coin1.height = 1 * coin1.dimension;
+
+	coin2.x = 902;
+	coin2.y = HEIGHT - (2 * coin2.dimension) + 52;
+	coin2.width = 1 * coin2.dimension;
+	coin2.height = 1 * coin2.dimension;
+
+	coin3.x = 954;
+	coin3.y = HEIGHT - (2 * coin3.dimension) + 52;
+	coin3.width = 1 * coin3.dimension;
+	coin3.height = 1 * coin3.dimension;
+
+	coin4.x = 1006;
+	coin4.y = HEIGHT - (2 * coin4.dimension) + 52;
+	coin4.width = 1 * coin4.dimension;
+	coin4.height = 1 * coin4.dimension;
+
 	brick4.x = 1225;
 	brick4.y = 320;
 	brick4.width = 1 * brick.dimension;
@@ -275,4 +419,29 @@ void Game::Level2()
 	ground3.y = HEIGHT - (2 * ground2.dimension);
 	ground3.width = 10 * ground2.dimension;
 	ground3.height = 2 * ground2.dimension;
+
+	coin5.x = 1785;
+	coin5.y = HEIGHT - (2 * coin5.dimension) + 52;
+	coin5.width = 1 * coin5.dimension;
+	coin5.height = 1 * coin5.dimension;
+
+	coin6.x = 1837;
+	coin6.y = HEIGHT - (2 * coin6.dimension) + 52;
+	coin6.width = 1 * coin6.dimension;
+	coin6.height = 1 * coin6.dimension;
+
+	coin7.x = 1889;
+	coin7.y = HEIGHT - (2 * coin7.dimension) + 52;
+	coin7.width = 1 * coin7.dimension;
+	coin7.height = 1 * coin7.dimension;
+
+	coin8.x = 1941;
+	coin8.y = HEIGHT - (2 * coin8.dimension) + 52;
+	coin8.width = 1 * coin8.dimension;
+	coin8.height = 1 * coin8.dimension;
+
+	coin9.x = 1993;
+	coin9.y = HEIGHT - (2 * coin9.dimension) + 52;
+	coin9.width = 1 * coin9.dimension;
+	coin9.height = 1 * coin9.dimension;
 }
