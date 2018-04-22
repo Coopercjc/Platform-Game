@@ -61,6 +61,7 @@ void Enemy::Physics(int a, int b) {
 	y = b;
 
 	if (dead) {
+		//when an enemy is killed the player scor goes up by one
 		player.scor += 1;
 		gravity += velocity;
 		y += gravity;

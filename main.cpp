@@ -1,5 +1,6 @@
 #include "game.h"
 #include <SFML/Graphics.hpp>
+//include file operations
 #include <fstream>
 
 using namespace sf;
@@ -12,9 +13,11 @@ Camera camera;
 //includes all in-game calculations
 Game game;
 int levelCounter = 1;
+//tracker for time elapsed and overall score
 int alarm =	0;
 int score = 0;
-
+int temp = 0;
+int dumb = 0;
 int main()
 {
 	//this section will call the levels depending on the global variable counter
@@ -54,6 +57,7 @@ int main()
 		groundS(groundT), gameoverS(gameoverT),
 		brickS(brickT), enemyS(enemyT), enemyS1(enemyT1),
 		powerupS(powerupT), heartS(heartT);
+		//enables fonts for the word score printed out when player dies
 	sf::Text text;
 	sf::Font font;
 	font.loadFromFile("ariel.ttf");
@@ -80,10 +84,18 @@ int main()
 		//clear window
 		window.clear();
 		game.Loop();
-
+		//ups score if an enemy is killed or a coin is aquired
+		if(game.player.scor != 0 && temp != game.player.score)
+		{
+				++score;
+				temp = game.player.scor;
+		}
+		if(game.player.coin != 0 && dumb != game.player.coin)
+		{
+				++score;
+				dumb = game.player.coin;
+		}
 		//this section draws the background of the levels
-		score += game.player.scor;
-		score += game.player.coin;
 		window.draw(background);
 		if (game.player.health > 0)
 		{
@@ -201,9 +213,10 @@ int main()
 				brickS.setPosition(x, y);  window.draw(brickS);
 			}
 		}
+		//positions clock on window and incriments it with time
 		for(int x = 0; x < game.player.health *21; x +=21)
 		{
-			alarm.setposition(camera.osszx + x, 1); window.draw(alarm);
+			alarm.setposition(camera.osszx - x, 1); window.draw(alarm);
 			alarm = clock.getElapsedTime().asSeconds();
 		}
 		for (int x = 0; x < game.player.health * 21; x += 21)
@@ -230,11 +243,13 @@ int main()
 		{
 			window.clear();
 			gameoverS.setPosition(camera.osszx + 100, 0);
+			//sets position for the word score to appear and the score to appear beneath it
 			text.setPosition(camera.osszx + 100, 20);
 			score.setPosition(camera.osszx + 100, 0);
 			window.draw(text);
 			window.draw(score);
 			std::ifstream open;
+			//creates file for saving score or stores it if file has already been created
 			if(!open.open("sefnew.txt"))
 			{
 				std::ofstream file ("sefnw.txt");
@@ -266,6 +281,7 @@ int main()
 		//this section will change the level when the player reaches a certain point in the level
 		if (game.player.x > 950 && levelCounter == 1) {
 			levelCounter++;
+			//when level ends the time elapsed gets substracted from score
 			for(int x = 0; alarm != 0; x +=21)
 			{
 				++score;

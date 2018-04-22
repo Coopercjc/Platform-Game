@@ -25,6 +25,7 @@ struct Player
 	float gravity, velocity = 0.5;
 
 	int health = 1;
+	//tracks score for enemies killed and coins collected
 	int scor = 0;
 	int coin = 0;
 	void Physics(Ground &ground);
