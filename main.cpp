@@ -211,7 +211,11 @@ int main()
 		}
 		if (game.player.CoinTotal != 0 && dumb != game.player.CoinTotal)
 		{
-			score += 100;
+		    if(game.player.CoinTotal < dumb)
+            {
+                dumb = 0;
+            }
+			score += 100 * (game.player.CoinTotal - dumb);
 			dumb = game.player.CoinTotal;
 		}
 
@@ -463,38 +467,36 @@ int main()
 		{
 			window.clear();
 			sf::Text moreText;
-			moreText.setString("Score:");
+			moreText.setString("Score");
 			gameoverS.setPosition(camera.osszx + 100, 0);
-			myText.setPosition(camera.osszx + 100, 0);
-			moreText.setPosition(camera.osszx + 100, 42);
-			window.draw(moreText);
-			window.draw(myText);
-			while (window.pollEvent(event))
-				{
-					switch (event.type) {
-					case sf::Event::KeyReleased:
-						switch (event.key.code) {
-						case sf::Keyboard::Return:
-							break;
-						}
-						break;
+			bool x = true;
+			while(x){
+                window.clear();
+                window.draw(background);
+                window.display();
+                myText.setPosition(camera.osszx + 335, 150);
+                moreText.setPosition(camera.osszx + 350, 175);
+                window.draw(moreText);
+                window.draw(myText);
+                while (window.pollEvent(event))
+                    {
+                        switch (event.type) {
+                        case sf::Event::KeyReleased:
+                            switch (event.key.code) {
+                            case sf::Keyboard::Return:
+                                x = false;
+                                break;
+                            }
+                            break;
 
-					}
-				}
-
+                        }
+                    }
+			}
 			std::ifstream opens;
-			if (!(opens.is_open()))
-				{
-					std::ofstream file("sefnw.txt");
-					file << score << std::endl;
-				}
-				else
-				{
-					std::ofstream write;
-					write.open("sefnw.txt", std::ios_base::app);
-					write << score;
-					write.close();
-				}
+            std::ofstream write;
+            write.open("scoreboard.txt", std::ios_base::app);
+            write << "\n" << score;
+            write.close();
 			//All of the code within this if statement is new
 			bool gameover = true;
 			while (gameover) {
