@@ -15,7 +15,7 @@ Camera camera;
 
 //includes all in-game calculations
 Game game;
-int levelCounter = 1;
+int levelCounter = 4;
 int alarm = 0;
 int score = 0;
 
@@ -52,11 +52,11 @@ int main()
 	int option;											//This segment is new
 	sf::Text menuTitle;									//
 	sf::Font font4 = menu.getFont();						//
-														//
-	menuTitle.setFont(font4);							//
+															//
+	menuTitle.setFont(font4);							//	
 	menuTitle.setString("2D Platform Game");			//
 	menuTitle.setFillColor(sf::Color::Yellow);			//This segment is new
-	menuTitle.setPosition(335, 175);
+	menuTitle.setPosition(camera.osszx + 335, 175);
 
 	//Setting Up Textures
 	sf::Texture playerT1, playerT2, playerT3, playerT4, groundT,
@@ -74,7 +74,7 @@ int main()
 	powerupT.loadFromFile("berry.png");
 	heartT.loadFromFile("heart.png");
 	flagT.loadFromFile("flag.png");
-	coinsT.loadFromFile("treasurebox.png");
+	coinsT.loadFromFile("coin1.png");
 
 	//Linking Sprites to textures
 	sf::Sprite playerS1(playerT1), playerS2(playerT2), playerS3(playerT3), playerS4(playerT4),
@@ -83,6 +83,9 @@ int main()
 		powerupS(powerupT), heartS(heartT), flagS(flagT), coinsS(coinsT);
 
 	//enables fonts for the word score printed out when the player dies
+	sf::Text text;
+	sf::Font font;
+	font.loadFromFile("mariofont.ttf");
 
 
 	//launching program
@@ -96,108 +99,110 @@ int main()
 
 		//Starts window at main menu
 
-					//This whole while loop is new
-			while (menuScreen) {
+		//This whole while loop is new
+		while (menuScreen) {
 
-				option = menu.getSelectedOption();
+			option = menu.getSelectedOption();
 			switch (option) {
-				case 0:
-					playerS1.setPosition(400, 275);
-					break;
+			case 0:
+				playerS1.setPosition(400, 275);
+				break;
+
+			case 1:
+				playerS1.setPosition(400, 425);
+				break;
+
+			}
+
+			while (window.pollEvent(event))
+			{
+				switch (event.type) {
+				case sf::Event::KeyReleased:
+					switch (event.key.code)
+					{
+					case sf::Keyboard::Up:
+						menu.moveUpMenu();
+						option = menu.getSelectedOption();
+						switch (option) {
+						case 0:
+							playerS1.setPosition(400, 275);
+							break;
 
 						case 1:
 							playerS1.setPosition(400, 425);
 							break;
 
-			}
-
-				while (window.pollEvent(event))
-				 {
-				switch (event.type) {
-					case sf::Event::KeyReleased:
-						switch (event.key.code)
-							 {
-							case sf::Keyboard::Up:
-								menu.moveUpMenu();
-								option = menu.getSelectedOption();
-								switch (option) {
-									case 0:
-										playerS1.setPosition(400, 275);
-										break;
-
-											case 1:
-												playerS1.setPosition(400, 425);
-												break;
-
-								}
-								break;
-
-									case sf::Keyboard::Down:
-										menu.moveDownMenu();
-										option = menu.getSelectedOption();
-										switch (option) {
-											case 0:
-												playerS1.setPosition(400, 275);
-												break;
-
-													case 1:
-														playerS1.setPosition(400, 425);
-														break;
-
-										}
-										break;
-
-											case sf::Keyboard::Return:
-												option = menu.getSelectedOption();
-												if (option == 0) {
-													menuScreen = false;
-
-												}
-												else if (option == 1) {
-													window.close();
-
-												}
-												}
+						}
 						break;
-						case sf::Event::Closed:
-							window.close();
+
+					case sf::Keyboard::Down:
+						menu.moveDownMenu();
+						option = menu.getSelectedOption();
+						switch (option) {
+						case 0:
+							playerS1.setPosition(400, 275);
 							break;
 
-				}
-				}
+						case 1:
+							playerS1.setPosition(400, 425);
+							break;
 
-							//clear window
-				window.clear();
+						}
+						break;
+
+					case sf::Keyboard::Return:
+						option = menu.getSelectedOption();
+						if (option == 0) {
+							menuScreen = false;
+							view.setCenter((WIDTH / 2) + camera.osszx, HEIGHT / 2);
+
+						}
+						else if (option == 1) {
+							window.close();
+
+						}
+					}
+					break;
+				case sf::Event::Closed:
+					window.close();
+					break;
+
+				}
+			}
+
+			//clear window
+			window.clear();
 			window.draw(background);
 			window.draw(playerS1);
 			window.draw(menuTitle);
 			menu.draw(window);
 
-				window.display();
+			window.display();
 
 
 		}
 
-			while (window.pollEvent(event))
-			{
-				// "close requested" event: we close the window
-				if (event.type == sf::Event::Closed)
-					window.close();
+		while (window.pollEvent(event))
+		{
+			// "close requested" event: we close the window
+			if (event.type == sf::Event::Closed)
+				window.close();
 
 
-								//This segment is new
-					switch (event.type) {
-					case sf::Event::KeyReleased:
-						switch (event.key.code) {
-							case sf::Keyboard::Escape:
-								menuScreen = true;
-								break;
+			//This segment is new
+			switch (event.type) {
+			case sf::Event::KeyReleased:
+				switch (event.key.code) {
+				case sf::Keyboard::Escape:
+					view.setCenter(WIDTH / 2, HEIGHT / 2);
+					menuScreen = true;
+					break;
 
-						}
-						break;
+				}
+				break;
 
 			}
-	}
+		}
 
 		//clear window
 		window.clear();
@@ -206,16 +211,14 @@ int main()
 
 		if (game.player.score != 0 && temp != game.player.score)
 		{
-			score += 200;
+			score+= 200;
 			temp = game.player.score;
 		}
 		if (game.player.CoinTotal != 0 && dumb != game.player.CoinTotal)
 		{
-		    if(game.player.CoinTotal < dumb)
-            {
-                dumb = 0;
-            }
-			score += 100 * (game.player.CoinTotal - dumb);
+			if (game.player.CoinTotal < dumb)
+				dumb = 0;
+			score+= 100*(game.player.CoinTotal - dumb);
 			dumb = game.player.CoinTotal;
 		}
 
@@ -363,14 +366,6 @@ int main()
 			}
 		}
 
-		for (int y = game.coin.y; y < game.coin.y + game.coin.height; y += game.coin.dimension) {
-			for (int x = game.coin.x; x < game.coin.x + game.coin.width; x += game.coin.dimension)
-			{
-				coinsS.setPosition(x, y);
-				window.draw(coinsS);
-			}
-		}
-
 		for (int y = game.coin1.y; y < game.coin1.y + game.coin1.height; y += game.coin1.dimension) {
 			for (int x = game.coin1.x; x < game.coin1.x + game.coin1.width; x += game.coin1.dimension)
 			{
@@ -403,9 +398,73 @@ int main()
 			}
 		}
 
+		for (int y = game.coin5.y; y < game.coin5.y + game.coin5.height; y += game.coin5.dimension) {
+			for (int x = game.coin5.x; x < game.coin5.x + game.coin5.width; x += game.coin5.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin6.y; y < game.coin6.y + game.coin6.height; y += game.coin6.dimension) {
+			for (int x = game.coin6.x; x < game.coin6.x + game.coin6.width; x += game.coin6.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin7.y; y < game.coin7.y + game.coin7.height; y += game.coin7.dimension) {
+			for (int x = game.coin7.x; x < game.coin7.x + game.coin7.width; x += game.coin7.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin8.y; y < game.coin8.y + game.coin8.height; y += game.coin8.dimension) {
+			for (int x = game.coin8.x; x < game.coin8.x + game.coin8.width; x += game.coin8.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin9.y; y < game.coin9.y + game.coin9.height; y += game.coin9.dimension) {
+			for (int x = game.coin9.x; x < game.coin9.x + game.coin9.width; x += game.coin9.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin10.y; y < game.coin10.y + game.coin10.height; y += game.coin10.dimension) {
+			for (int x = game.coin10.x; x < game.coin10.x + game.coin10.width; x += game.coin10.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin11.y; y < game.coin11.y + game.coin11.height; y += game.coin11.dimension) {
+			for (int x = game.coin11.x; x < game.coin11.x + game.coin11.width; x += game.coin11.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
+
+		for (int y = game.coin12.y; y < game.coin12.y + game.coin12.height; y += game.coin12.dimension) {
+			for (int x = game.coin12.x; x < game.coin12.x + game.coin12.width; x += game.coin12.dimension)
+			{
+				coinsS.setPosition(x, y);
+				window.draw(coinsS);
+			}
+		}
 
 
-		if (levelCounter==1) {
+
+		if (levelCounter == 1) {
 			flagS.setPosition(game.flag.x, game.flag.y);
 			window.draw(flagS);
 		}
@@ -429,24 +488,19 @@ int main()
 		sf::Text myText;
 		std::stringstream ss;
 		ss << score;
-		myText.setString(ss.str().c_str());
 		myText.setFont(font4);
+		myText.setString(ss.str().c_str());
+		myText.setPosition(camera.osszx, 42);
+		window.draw(myText);
 
 		for (int x = 0; x < game.player.health * 21; x += 21)
 		{
-			myText.setPosition(camera.osszx + x, 42);
-			window.draw(myText);
-		}
-
-		for (int x = 0; x < game.player.health * 21; x += 21)
-
-		{
-			heartS.setPosition(camera.osszx + x, 1);
-			window.draw(heartS);
+		heartS.setPosition(camera.osszx + x, 1);
+		window.draw(heartS);
 		}
 
 		//outputs the enemies in the level
-		enemyS.setPosition(game.enemy.x-10, game.enemy.y-12);
+		enemyS.setPosition(game.enemy.x - 10, game.enemy.y - 12);
 		window.draw(enemyS);
 
 		enemyS1.setPosition(game.enemy1.x - 55, game.enemy1.y - 30);
@@ -468,23 +522,26 @@ int main()
 			window.clear();
 			sf::Text moreText;
 			moreText.setString("Score");
+			moreText.setFont(font4);
+			myText.setFont(font4);
 			gameoverS.setPosition(camera.osszx + 100, 0);
-			std::ifstream opens;
-            std::ofstream write;
-            write.open("scoreboard.txt", std::ios_base::app);
-            write << "\n" << score;
-            write.close();
+			
+				std::ofstream write;
+				write.open("scoreboard.txt", std::ios_base::app);
+				write << score;
+				write.close();
+
 			//All of the code within this if statement is new
 			bool gameover = true;
 			while (gameover) {
 
 				window.clear();
 				gameoverS.setPosition(camera.osszx + 100, 0);
-                myText.setPosition(camera.osszx + 335, 175);
-                moreText.setPosition(camera.osszx + 350, 200);
-                window.draw(moreText);
-                window.draw(myText);
+				myText.setPosition(camera.osszx + 530, 400);
+				moreText.setPosition(camera.osszx + 375, 400);
 				window.draw(gameoverS);
+				window.draw(myText);
+				window.draw(moreText);
 
 				while (window.pollEvent(event))
 				{
@@ -504,6 +561,7 @@ int main()
 				}
 
 				window.display();
+				
 			}
 		}
 		//resets the level when the player dies
@@ -512,14 +570,15 @@ int main()
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
 			camera.osszx = 0;
 			game.player.health--;
-			if(score < 500)
-            {
-                score = 0;
+			if (score < 500)
+			{
+				score = 0;
 			}
 			else
-            {
-                score -= 500;
-            }
+			{
+				score -= 500;
+			}
+
 			game.player.end = false;
 			if (levelCounter == 1)
 				game.Level1();
@@ -532,6 +591,10 @@ int main()
 		}
 		//this section will change the level when the player reaches a certain point in the level
 		if (game.player.x > 2400 && levelCounter == 1) {
+			if (game.player.CoinTotal == 12) {
+				game.player.health++;
+			}
+			game.player.CoinTotal = 0;
 			levelCounter++;
 			window.clear();
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
@@ -540,6 +603,10 @@ int main()
 				game.Level2();
 		}
 		if (game.player.x > 2500 && levelCounter == 2) {
+			if (game.player.CoinTotal == 12) {
+				game.player.health++;
+			}
+			game.player.CoinTotal = 0;
 			levelCounter++;
 			window.clear();
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
@@ -548,17 +615,16 @@ int main()
 				game.Level3();
 		}
 		if (game.player.x > 2700 && levelCounter == 3) {
+			if (game.player.CoinTotal == 12) {
+				game.player.health++;
+			}
+			game.player.CoinTotal = 0;
 			levelCounter++;
 			window.clear();
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
 			camera.osszx = 0;
 			if (levelCounter == 4)
 				game.Level4();
-		}
-		if (game.player.x > 2700 && levelCounter == 4) {
-			window.clear();
-			view.setCenter(WIDTH / 2, HEIGHT / 2);
-
 		}
 
 		// window.draw(...);
