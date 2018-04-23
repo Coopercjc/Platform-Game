@@ -463,7 +463,7 @@ int main()
 		{
 			window.clear();
 			sf::Text moreText;
-			moreText.setString("Score:")
+			moreText.setString("Score:");
 			gameoverS.setPosition(camera.osszx + 100, 0);
 			myText.setPosition(camera.osszx + 100, 0);
 			moreText.setPosition(camera.osszx + 100, 42);
@@ -483,7 +483,7 @@ int main()
 				}
 
 			std::ifstream opens;
-			if (!(opens.open("sefnw.txt")))
+			if (!(opens.is_open()))
 				{
 					std::ofstream file("sefnw.txt");
 					file << score << std::endl;
