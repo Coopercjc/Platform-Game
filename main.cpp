@@ -15,7 +15,7 @@ Camera camera;
 
 //includes all in-game calculations
 Game game;
-int levelCounter = 3;
+int levelCounter = 1;
 int alarm = 0;
 int score = 0;
 
@@ -56,7 +56,7 @@ int main()
 	menuTitle.setFont(font4);							//	
 	menuTitle.setString("Jump Man");			//
 	menuTitle.setFillColor(sf::Color::Yellow);			//This segment is new
-	menuTitle.setPosition(camera.osszx + 335, 175);
+	menuTitle.setPosition(camera.osszx + 395, 175);
 
 	//Setting Up Textures
 	sf::Texture playerT1, playerT2, playerT3, playerT4, groundT,
@@ -160,7 +160,7 @@ int main()
 						}
 						else if (option == 1) {
 							window.close();
-
+							return 0;
 						}
 					}
 					break;
@@ -590,8 +590,8 @@ int main()
 				score -= 500;
 			}
 
-			game.enemy.x = game.enemy.xx;
-			game.enemy.y = game.enemy.yy;
+			//game.enemy.x = game.enemy.xx;
+			//game.enemy.y = game.enemy.yy;
 
 			game.player.end = false;
 			if (levelCounter == 1)

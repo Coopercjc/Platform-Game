@@ -7,7 +7,7 @@
 
 #define WIDTH 1000
 #define HEIGHT 600
-//#define sound
+
 using namespace sf;
 
 //Defines the powerups
@@ -93,13 +93,6 @@ public:
 
 private:
 
-#ifdef sound
-	sf::SoundBuffer jumpsoundSB;
-	sf::Sound jumpsound;
-	sf::Music themesong;
-
-	bool first = true;
-#endif
 
 	Clock clock;
 	float timer = 0, delay = 0.01;

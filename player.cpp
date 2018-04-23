@@ -53,6 +53,8 @@ void Player::Physics(Ground &ground)
 
 }
 
+//Checks to see if player is making contact
+//with top of the block
 bool Player::contact(Ground &ground)
 {
 	bool output = false;
@@ -110,6 +112,7 @@ void Enemy::Physics(int a, int b) {
 	
 }
 
+//Makes the coins disappear
 void SCoin::Poof(Player &player)
 {
 	if (x <= player.x + player.width &&
@@ -131,6 +134,7 @@ void SCoin::Poof(Player &player)
 
 }
 
+//Actually makes the coins disappear
 void SCoin::Collect() {
 
 	if (Collected) {
@@ -164,29 +168,6 @@ void Enemy::AI(double x1, double x2)
 			maxi = false;
 		}
 	}
-	
-	/*if (max <= limit && dead == false)
-	{
-		x++;
-		max++;;
-	}
-	else if (max2 <= limit && dead == false)
-	{
-		x--;
-		max2++;
-	}
-
-	if (max2 > limit && maxi == false)
-	{
-		max = 0;
-		maxi = true;
-	}
-	if (max > limit && maxi == true)
-	{
-		max2 = 0;
-		maxi = false;
-	}*/
-
 }
 
 void Enemy::Orbit(int a, int b, int r) {
@@ -234,7 +215,7 @@ void Enemy::Kill1(Player &player)
 	{
 		player.end = true;
 		if (counter1 == 0) {
-			player.score++;
+			//player.score++;
 			counter1++;
 		}
 	}

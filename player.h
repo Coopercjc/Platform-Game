@@ -25,7 +25,7 @@ struct Player
 
 	float gravity, velocity = 0.5;
 
-	int health = 10;
+	int health = 1;
 
 	int score = 0;
 	int CoinTotal = 0;
