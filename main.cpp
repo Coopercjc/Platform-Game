@@ -469,29 +469,6 @@ int main()
 			sf::Text moreText;
 			moreText.setString("Score");
 			gameoverS.setPosition(camera.osszx + 100, 0);
-			bool x = true;
-			while(x){
-                window.clear();
-                window.draw(background);
-                window.display();
-                myText.setPosition(camera.osszx + 335, 150);
-                moreText.setPosition(camera.osszx + 350, 175);
-                window.draw(moreText);
-                window.draw(myText);
-                while (window.pollEvent(event))
-                    {
-                        switch (event.type) {
-                        case sf::Event::KeyReleased:
-                            switch (event.key.code) {
-                            case sf::Keyboard::Return:
-                                x = false;
-                                break;
-                            }
-                            break;
-
-                        }
-                    }
-			}
 			std::ifstream opens;
             std::ofstream write;
             write.open("scoreboard.txt", std::ios_base::app);
@@ -503,6 +480,10 @@ int main()
 
 				window.clear();
 				gameoverS.setPosition(camera.osszx + 100, 0);
+                myText.setPosition(camera.osszx + 335, 175);
+                moreText.setPosition(camera.osszx + 350, 200);
+                window.draw(moreText);
+                window.draw(myText);
 				window.draw(gameoverS);
 
 				while (window.pollEvent(event))
@@ -531,7 +512,14 @@ int main()
 			view.setCenter(WIDTH / 2, HEIGHT / 2);
 			camera.osszx = 0;
 			game.player.health--;
-
+			if(score < 500)
+            {
+                score = 0;
+			}
+			else
+            {
+                score -= 500;
+            }
 			game.player.end = false;
 			if (levelCounter == 1)
 				game.Level1();
@@ -566,6 +554,11 @@ int main()
 			camera.osszx = 0;
 			if (levelCounter == 4)
 				game.Level4();
+		}
+		if (game.player.x > 2700 && levelCounter == 4) {
+			window.clear();
+			view.setCenter(WIDTH / 2, HEIGHT / 2);
+
 		}
 
 		// window.draw(...);
