@@ -53,7 +53,7 @@ int main()
 	sf::Text menuTitle;									//
 	sf::Font font4 = menu.getFont();						//
 														//
-	menuTitle.setFont(font4);							//	
+	menuTitle.setFont(font4);							//
 	menuTitle.setString("2D Platform Game");			//
 	menuTitle.setFillColor(sf::Color::Yellow);			//This segment is new
 	menuTitle.setPosition(335, 175);
@@ -83,10 +83,7 @@ int main()
 		powerupS(powerupT), heartS(heartT), flagS(flagT), coinsS(coinsT);
 
 	//enables fonts for the word score printed out when the player dies
-	sf::Text text;
-	sf::Font font;
-	font.loadFromFile("mariofont.ttf");
-	
+
 
 	//launching program
 	while (window.isOpen())
@@ -98,22 +95,22 @@ int main()
 		sf::Event event;
 
 		//Starts window at main menu
-		
+
 					//This whole while loop is new
 			while (menuScreen) {
-			
+
 				option = menu.getSelectedOption();
 			switch (option) {
 				case 0:
 					playerS1.setPosition(400, 275);
 					break;
-					
+
 						case 1:
 							playerS1.setPosition(400, 425);
 							break;
-							
+
 			}
-			
+
 				while (window.pollEvent(event))
 				 {
 				switch (event.type) {
@@ -127,14 +124,14 @@ int main()
 									case 0:
 										playerS1.setPosition(400, 275);
 										break;
-										
+
 											case 1:
 												playerS1.setPosition(400, 425);
 												break;
-												
+
 								}
 								break;
-								
+
 									case sf::Keyboard::Down:
 										menu.moveDownMenu();
 										option = menu.getSelectedOption();
@@ -142,52 +139,52 @@ int main()
 											case 0:
 												playerS1.setPosition(400, 275);
 												break;
-												
+
 													case 1:
 														playerS1.setPosition(400, 425);
 														break;
-														
+
 										}
 										break;
-										
+
 											case sf::Keyboard::Return:
 												option = menu.getSelectedOption();
 												if (option == 0) {
 													menuScreen = false;
-													
+
 												}
 												else if (option == 1) {
 													window.close();
-													
+
 												}
 												}
 						break;
 						case sf::Event::Closed:
 							window.close();
 							break;
-							
+
 				}
 				}
-			
+
 							//clear window
 				window.clear();
 			window.draw(background);
 			window.draw(playerS1);
 			window.draw(menuTitle);
 			menu.draw(window);
-			
+
 				window.display();
-			
-				
+
+
 		}
-		
+
 			while (window.pollEvent(event))
 			{
 				// "close requested" event: we close the window
 				if (event.type == sf::Event::Closed)
 					window.close();
-				
-					
+
+
 								//This segment is new
 					switch (event.type) {
 					case sf::Event::KeyReleased:
@@ -195,10 +192,10 @@ int main()
 							case sf::Keyboard::Escape:
 								menuScreen = true;
 								break;
-								
+
 						}
 						break;
-						
+
 			}
 	}
 
@@ -209,12 +206,12 @@ int main()
 
 		if (game.player.score != 0 && temp != game.player.score)
 		{
-			++score;
+			score += 200;
 			temp = game.player.score;
 		}
 		if (game.player.CoinTotal != 0 && dumb != game.player.CoinTotal)
 		{
-			++score;
+			score += 100;
 			dumb = game.player.CoinTotal;
 		}
 
@@ -276,7 +273,7 @@ int main()
 		for (int y = game.ground.y; y < game.ground.y + game.ground.height; y += game.ground.dimension) {
 			for (int x = game.ground.x; x < game.ground.x + game.ground.width; x += game.ground.dimension)
 			{
-				groundS.setPosition(x - 32, y - 35);  
+				groundS.setPosition(x - 32, y - 35);
 				window.draw(groundS);
 			}
 		}
@@ -284,7 +281,7 @@ int main()
 		for (int y = game.ground2.y; y < game.ground2.y + game.ground2.height; y += game.ground2.dimension) {
 			for (int x = game.ground2.x; x < game.ground2.x + game.ground2.width; x += game.ground2.dimension)
 			{
-				groundS.setPosition(x - 32, y - 35);  
+				groundS.setPosition(x - 32, y - 35);
 				window.draw(groundS);
 			}
 		}
@@ -292,7 +289,7 @@ int main()
 		for (int y = game.ground3.y; y < game.ground3.y + game.ground3.height; y += game.ground3.dimension) {
 			for (int x = game.ground3.x; x < game.ground3.x + game.ground3.width; x += game.ground3.dimension)
 			{
-				groundS.setPosition(x - 32, y - 35);  
+				groundS.setPosition(x - 32, y - 35);
 				window.draw(groundS);
 			}
 		}
@@ -301,7 +298,7 @@ int main()
 		for (int y = game.brick.y; y < game.brick.y + game.brick.height; y += game.brick.dimension) {
 			for (int x = game.brick.x; x < game.brick.x + game.brick.width; x += game.brick.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -309,7 +306,7 @@ int main()
 		for (int y = game.brick2.y; y < game.brick2.y + game.brick2.height; y += game.brick2.dimension) {
 			for (int x = game.brick2.x; x < game.brick2.x + game.brick2.width; x += game.brick2.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -317,7 +314,7 @@ int main()
 		for (int y = game.brick3.y; y < game.brick3.y + game.brick3.height; y += game.brick3.dimension) {
 			for (int x = game.brick3.x; x < game.brick3.x + game.brick3.width; x += game.brick3.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -325,7 +322,7 @@ int main()
 		for (int y = game.brick4.y; y < game.brick4.y + game.brick4.height; y += game.brick4.dimension) {
 			for (int x = game.brick4.x; x < game.brick4.x + game.brick4.width; x += game.brick4.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -333,7 +330,7 @@ int main()
 		for (int y = game.brick5.y; y < game.brick5.y + game.brick5.height; y += game.brick5.dimension) {
 			for (int x = game.brick5.x; x < game.brick5.x + game.brick5.width; x += game.brick5.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -341,7 +338,7 @@ int main()
 		for (int y = game.brick6.y; y < game.brick6.y + game.brick6.height; y += game.brick6.dimension) {
 			for (int x = game.brick6.x; x < game.brick6.x + game.brick6.width; x += game.brick6.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -349,7 +346,7 @@ int main()
 		for (int y = game.brick7.y; y < game.brick7.y + game.brick7.height; y += game.brick7.dimension) {
 			for (int x = game.brick7.x; x < game.brick7.x + game.brick7.width; x += game.brick7.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -357,7 +354,7 @@ int main()
 		for (int y = game.brick8.y; y < game.brick8.y + game.brick8.height; y += game.brick8.dimension) {
 			for (int x = game.brick8.x; x < game.brick8.x + game.brick8.width; x += game.brick8.dimension)
 			{
-				brickS.setPosition(x, y);  
+				brickS.setPosition(x, y);
 				window.draw(brickS);
 			}
 		}
@@ -403,7 +400,7 @@ int main()
 		}
 
 
-		
+
 		if (levelCounter==1) {
 			flagS.setPosition(game.flag.x, game.flag.y);
 			window.draw(flagS);
@@ -427,20 +424,20 @@ int main()
 
 		sf::Text myText;
 		std::stringstream ss;
-		ss << alarm;
+		ss << score;
 		myText.setString(ss.str().c_str());
-		
+		myText.setFont(font4);
+
 		for (int x = 0; x < game.player.health * 21; x += 21)
 		{
-			myText.setPosition(camera.osszx - x, 1); 
+			myText.setPosition(camera.osszx + x, 42);
 			window.draw(myText);
-			alarm = clock1.getElapsedTime().asSeconds();
 		}
 
 		for (int x = 0; x < game.player.health * 21; x += 21)
 
 		{
-			heartS.setPosition(camera.osszx + x, 1);  
+			heartS.setPosition(camera.osszx + x, 1);
 			window.draw(heartS);
 		}
 
@@ -466,15 +463,38 @@ int main()
 		{
 			window.clear();
 			sf::Text moreText;
-			std::stringstream sm;
-			sm << score;
-			moreText.setString(sm.str().c_str());
+			moreText.setString("Score:");
 			gameoverS.setPosition(camera.osszx + 100, 0);
-			text.setPosition(camera.osszx + 100, 20);
-			moreText.setPosition(camera.osszx + 100, 0);
-			//window.draw(text);
-			//window.draw(moreText);
+			myText.setPosition(camera.osszx + 100, 0);
+			moreText.setPosition(camera.osszx + 100, 42);
+			window.draw(moreText);
+			window.draw(myText);
+			while (window.pollEvent(event))
+				{
+					switch (event.type) {
+					case sf::Event::KeyReleased:
+						switch (event.key.code) {
+						case sf::Keyboard::Return:
+							break;
+						}
+						break;
+
+					}
+				}
+
 			std::ifstream opens;
+			if (!(opens.is_open()))
+				{
+					std::ofstream file("sefnw.txt");
+					file << score << std::endl;
+				}
+				else
+				{
+					std::ofstream write;
+					write.open("sefnw.txt", std::ios_base::app);
+					write << score;
+					write.close();
+				}
 			//All of the code within this if statement is new
 			bool gameover = true;
 			while (gameover) {
@@ -482,8 +502,6 @@ int main()
 				window.clear();
 				gameoverS.setPosition(camera.osszx + 100, 0);
 				window.draw(gameoverS);
-				window.draw(text);
-				window.draw(moreText);
 
 				while (window.pollEvent(event))
 				{
@@ -503,20 +521,6 @@ int main()
 				}
 
 				window.display();
-				/*if (!(opens.open("sefnw.txt")))
-				{
-					std::ofstream file("sefnw.txt");
-					file << score << std::endl;
-				}
-				else
-				{
-					std::ofstream write;
-					write.open("sefnw.txt", std::ios_base::app);
-					write << score;
-					write.close();
-				}*/
-				//sf::sleep(sf::milliseconds(600));
-				window.draw(gameoverS);
 			}
 		}
 		//resets the level when the player dies
