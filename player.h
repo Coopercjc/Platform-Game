@@ -25,7 +25,7 @@ struct Player
 
 	float gravity, velocity = 0.5;
 
-	int health = 1;
+	int health = 10;
 
 	int score = 0;
 	int CoinTotal = 0;
@@ -34,13 +34,15 @@ struct Player
 	
 	void Block(int &osszx);
 	void Gravity();
+	bool contact(Ground &ground);
 };
 
 //Represents the enemy entities
 struct Enemy
 {
-	int x, y;
+	double x, y;
 	int xx, yy;
+	int counter, counter1;
 	static constexpr int width = 42, height = 42;
 
 	int max, max2, c;
@@ -54,14 +56,17 @@ struct Enemy
 	void Physics(Ground &ground);
 	void Physics(int x, int y);
 	void Gravity();
-	void AI(int limit, Player &player);
+	void AI(double x1, double x2);
 	void Orbit(int a, int b, int r);
 	void Kill(Player &player);
 	void Kill1(Player &player);
 };
 
 struct SCoin {
+	bool Collected;
 	int dimension = 42;
 	int x, y;
+	void Collect();
 	int width, height;
+	void Poof(Player & player);
 };

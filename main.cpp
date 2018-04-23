@@ -15,7 +15,7 @@ Camera camera;
 
 //includes all in-game calculations
 Game game;
-int levelCounter = 4;
+int levelCounter = 3;
 int alarm = 0;
 int score = 0;
 
@@ -54,19 +54,20 @@ int main()
 	sf::Font font4 = menu.getFont();						//
 															//
 	menuTitle.setFont(font4);							//	
-	menuTitle.setString("2D Platform Game");			//
+	menuTitle.setString("Jump Man");			//
 	menuTitle.setFillColor(sf::Color::Yellow);			//This segment is new
 	menuTitle.setPosition(camera.osszx + 335, 175);
 
 	//Setting Up Textures
 	sf::Texture playerT1, playerT2, playerT3, playerT4, groundT,
-		gameoverT, brickT, enemyT, enemyT1, circleBoiT, powerupT, coinsT, heartT, flagT;
+		gameoverT, endgameT, brickT, enemyT, enemyT1, circleBoiT, powerupT, coinsT, heartT, flagT;
 	playerT1.loadFromFile("static1.png");
 	playerT2.loadFromFile("walk2.png");
 	playerT3.loadFromFile("static1-upgraded.png");
 	playerT4.loadFromFile("walk2-upgraded.png");
 	groundT.loadFromFile("groundbrick2.png");
 	gameoverT.loadFromFile("gameover.png");
+	endgameT.loadFromFile("endgame.png");
 	brickT.loadFromFile("brick.png");
 	enemyT.loadFromFile("kabutops.png");
 	enemyT1.loadFromFile("ghost.png");
@@ -78,7 +79,7 @@ int main()
 
 	//Linking Sprites to textures
 	sf::Sprite playerS1(playerT1), playerS2(playerT2), playerS3(playerT3), playerS4(playerT4),
-		groundS(groundT), gameoverS(gameoverT),
+		groundS(groundT), gameoverS(gameoverT), endgameS(endgameT),
 		brickS(brickT), enemyS(enemyT), enemyS1(enemyT1), circleBoiS(circleBoiT),
 		powerupS(powerupT), heartS(heartT), flagS(flagT), coinsS(coinsT);
 
@@ -463,7 +464,7 @@ int main()
 		}
 
 
-
+		//Draws the flags per level
 		if (levelCounter == 1) {
 			flagS.setPosition(game.flag.x, game.flag.y);
 			window.draw(flagS);
@@ -484,7 +485,7 @@ int main()
 			window.draw(flagS);
 		}
 
-
+		//Draws the score and hearts
 		sf::Text myText;
 		std::stringstream ss;
 		ss << score;
@@ -499,6 +500,8 @@ int main()
 		window.draw(heartS);
 		}
 
+
+
 		//outputs the enemies in the level
 		enemyS.setPosition(game.enemy.x - 10, game.enemy.y - 12);
 		window.draw(enemyS);
@@ -508,6 +511,11 @@ int main()
 
 		circleBoiS.setPosition(game.circleBoi.x - 13, game.circleBoi.y - 30);
 		window.draw(circleBoiS);
+
+		circleBoiS.setPosition(game.circleBoi2.x - 13, game.circleBoi2.y - 30);
+		window.draw(circleBoiS);
+
+
 
 		//outputs the powerups in the level
 		if (game.powerup.dead == false)
@@ -550,8 +558,10 @@ int main()
 						switch (event.key.code) {
 						case sf::Keyboard::Return:
 							menuScreen = true;
-							game.player.health = 1;
+							game.player.health--;
 							gameover = false;
+							view.setCenter(WIDTH / 2, HEIGHT / 2);
+							return 0;
 							break;
 
 						}
@@ -563,6 +573,7 @@ int main()
 				window.display();
 				
 			}
+
 		}
 		//resets the level when the player dies
 		else if (game.player.end == true)
@@ -578,6 +589,9 @@ int main()
 			{
 				score -= 500;
 			}
+
+			game.enemy.x = game.enemy.xx;
+			game.enemy.y = game.enemy.yy;
 
 			game.player.end = false;
 			if (levelCounter == 1)
@@ -625,6 +639,53 @@ int main()
 			camera.osszx = 0;
 			if (levelCounter == 4)
 				game.Level4();
+		}
+
+		if (game.player.x > 2161 && levelCounter == 4) {
+			bool endgame = true;
+			while (endgame) {
+
+				
+				sf::Text moreText;
+				moreText.setString("Score");
+				moreText.setFont(font4);
+				myText.setFont(font4);
+
+				std::ofstream write;
+				write.open("scoreboard.txt", std::ios_base::app);
+				write << score;
+				write.close();
+
+				myText.setPosition(camera.osszx + 530, 400);
+				moreText.setPosition(camera.osszx + 375, 400);
+				
+				
+				window.clear();
+				endgameS.setPosition(camera.osszx + 300, 200);
+				window.draw(endgameS);
+				window.draw(myText);
+				window.draw(moreText);
+
+
+				while (window.pollEvent(event))
+				{
+					switch (event.type) {
+					case sf::Event::KeyReleased:
+						switch (event.key.code) {
+						case sf::Keyboard::Return:
+							endgame = false;
+							return 0;
+							break;
+
+						}
+						break;
+
+					}
+				}
+
+				window.display();
+
+			}
 		}
 
 		// window.draw(...);

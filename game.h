@@ -26,22 +26,6 @@ struct PowerUp
 	void Heal(Player &player);
 };
 
-struct Coin
-{
-	int x, y;
-	int dimension = 42;
-	static constexpr int width = 42, height = 42;
-	
-	float gravity = 0.5;
-	float velocity = 0.4;
-	
-	void Physics(Ground &ground);
-	void Gravity();
-	void AI();
-	void ScoreInc(Player &player);
-	
-};
-
 struct Flag{
 	int x, y;
 	static constexpr int width = 1, height = 1;
@@ -83,6 +67,7 @@ public:
 	Ground brick6;
 	Ground brick7;
 	Ground brick8;
+	Ground g;
 
 	SCoin coin1;
 	SCoin coin2;
@@ -100,10 +85,9 @@ public:
 	Enemy enemy;
 	Enemy enemy1;
 	Enemy circleBoi;
+	Enemy circleBoi2;
 
 	PowerUp powerup;
-	
-	Coin coin;
 
 	Flag flag;
 
