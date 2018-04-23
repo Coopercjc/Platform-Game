@@ -393,25 +393,75 @@ void Game::Level2()
 	ground.width = 5 * ground.dimension;
 	ground.height = 2 * ground.dimension;
 
+	coin1.x = 21;
+	coin1.y = 370;
+	coin1.width = 1 * coin1.dimension;
+	coin1.height = 1 * coin1.dimension;
+
+	coin2.x = 63;
+	coin2.y = 370;
+	coin2.width = 1 * coin2.dimension;
+	coin2.height = 1 * coin2.dimension;
+
+	coin3.x = 105;
+	coin3.y = 370;
+	coin3.width = 1 * coin3.dimension;
+	coin3.height = 1 * coin3.dimension;
+
+	coin4.x = 147;
+	coin4.y = 370;
+	coin4.width = 1 * coin4.dimension;
+	coin4.height = 1 * coin4.dimension;
+
 	brick.x = 300;
 	brick.y = 320;
 	brick.width = 2 * brick.dimension;
 	brick.height = 1 * brick.dimension;
+
+	coin5.x = 321;
+	coin5.y = 150;
+	coin5.width = 1 * coin5.dimension;
+	coin5.height = 1 * coin5.dimension;
 
 	brick2.x = 530;
 	brick2.y = 150;
 	brick2.width = 2 * brick.dimension;
 	brick2.height = 1 * brick.dimension;
 
+	coin6.x = 551;
+	coin6.y = 100;
+	coin6.width = 1 * coin6.dimension;
+	coin6.height = 1 * coin6.dimension;
+
 	brick3.x = 780;
 	brick3.y = 320;
 	brick3.width = 2 * brick.dimension;
 	brick3.height = 1 * brick.dimension;
 
+	coin7.x = 801;
+	coin7.y = 150;
+	coin7.width = 1 * coin7.dimension;
+	coin7.height = 1 * coin7.dimension;
+
 	ground2.x = 930;
 	ground2.y = HEIGHT - (2 * ground2.dimension);
 	ground2.width = 5 * ground2.dimension;
 	ground2.height = 2 * ground2.dimension;
+
+	coin8.x = 951;
+	coin8.y = 370;
+	coin8.width = 1 * coin8.dimension;
+	coin8.height = 1 * coin8.dimension;
+
+	coin9.x = 993;
+	coin9.y = 370;
+	coin9.width = 1 * coin9.dimension;
+	coin9.height = 1 * coin9.dimension;
+
+	coin10.x = 1035;
+	coin10.y = 370;
+	coin10.width = 1 * coin10.dimension;
+	coin10.height = 1 * coin10.dimension;
 
 	brick4.x = 1230;
 	brick4.y = 320;
@@ -423,6 +473,11 @@ void Game::Level2()
 	brick5.width = 1 * brick.dimension;
 	brick5.height = 1 * brick.dimension;
 
+	coin11.x = 1425;
+	coin11.y = 200;
+	coin11.width = 1 * coin11.dimension;
+	coin11.height = 1 * coin11.dimension;
+
 	brick6.x = 1610;
 	brick6.y = 320;
 	brick6.width = 1 * brick.dimension;
@@ -432,6 +487,11 @@ void Game::Level2()
 	brick7.y = 320;
 	brick7.width = 1 * brick.dimension;
 	brick7.height = 1 * brick.dimension;
+
+	coin12.x = 1790;
+	coin12.y = 200;
+	coin12.width = 1 * coin12.dimension;
+	coin12.height = 1 * coin12.dimension;
 
 	ground3.x = 2000;
 	ground3.y = HEIGHT - (2 * ground2.dimension);
@@ -457,30 +517,80 @@ void Game::Level3()
 	ground.width = 5 * ground.dimension;
 	ground.height = 2 * ground.dimension;
 
+	coin1.x = 21;
+	coin1.y = 370;
+	coin1.width = 1 * coin1.dimension;
+	coin1.height = 1 * coin1.dimension;
+
+	coin2.x = 63;
+	coin2.y = 370;
+	coin2.width = 1 * coin2.dimension;
+	coin2.height = 1 * coin2.dimension;
+
+	coin3.x = 105;
+	coin3.y = 370;
+	coin3.width = 1 * coin3.dimension;
+	coin3.height = 1 * coin3.dimension;
+
+	coin4.x = 147;
+	coin4.y = 370;
+	coin4.width = 1 * coin4.dimension;
+	coin4.height = 1 * coin4.dimension;
+
 	brick.x = 300;
 	brick.y = 400;
 	brick.width = 1 * brick.dimension;
 	brick.height = 1 * brick.dimension;
+
+	coin5.x = 300;
+	coin5.y = 348;
+	coin5.width = 1 * coin5.dimension;
+	coin5.height = 1 * coin5.dimension;
 
 	brick2.x = 450;
 	brick2.y = 250;
 	brick2.width = 1 * brick.dimension;
 	brick2.height = 1 * brick.dimension;
 
+	coin6.x = 450;
+	coin6.y = 208;
+	coin6.width = 1 * coin6.dimension;
+	coin6.height = 1 * coin6.dimension;
+
 	brick3.x = 650;
 	brick3.y = 100;
 	brick3.width = 1 * brick.dimension;
 	brick3.height = 1 * brick.dimension;
+
+	coin7.x = 650;
+	coin7.y = 100;
+	coin7.width = 1 * coin7.dimension;
+	coin7.height = 1 * coin7.dimension;
 
 	brick4.x = 900;
 	brick4.y = 400;
 	brick4.width = 1 * brick.dimension;
 	brick4.height = 1 * brick.dimension;
 
+	coin8.x = 900;
+	coin8.y = 352;
+	coin8.width = 1 * coin8.dimension;
+	coin8.height = 1 * coin8.dimension;
+
 	ground2.x = 1050;
 	ground2.y = HEIGHT - (2 * ground2.dimension);
 	ground2.width = 5 * ground2.dimension;
 	ground2.height = 2 * ground2.dimension;
+
+	coin9.x = 1092;
+	coin9.y = 370;
+	coin9.width = 1 * coin9.dimension;
+	coin9.height = 1 * coin9.dimension;
+
+	coin10.x = 1176;
+	coin10.y = 370;
+	coin10.width = 1 * coin10.dimension;
+	coin10.height = 1 * coin10.dimension;
 
 	brick5.x = 1400;
 	brick5.y = 320;
@@ -492,6 +602,11 @@ void Game::Level3()
 	brick6.width = 1 * brick.dimension;
 	brick6.height = 1 * brick.dimension;
 
+	coin11.x = 1620;
+	coin11.y = 358;
+	coin11.width = 1 * coin11.dimension;
+	coin11.height = 1 * coin11.dimension;
+
 	brick7.x = 1850;
 	brick7.y = 320;
 	brick7.width = 1 * brick.dimension;
@@ -501,6 +616,11 @@ void Game::Level3()
 	brick8.y = 475;
 	brick8.width = 1 * brick.dimension;
 	brick8.height = 1 * brick.dimension;
+
+	coin12.x = 2050;
+	coin12.y = 433;
+	coin12.width = 1 * coin12.dimension;
+	coin12.height = 1 * coin12.dimension;
 
 	ground3.x = 2275;
 	ground3.y = HEIGHT - (2 * ground2.dimension);
